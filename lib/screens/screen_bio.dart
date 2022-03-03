@@ -25,11 +25,10 @@ class ScreenBio extends StatefulWidget {
 }
 
 class _ScreenBioState extends State<ScreenBio> {
-
   @override
   Widget build(BuildContext context) {
-      double kDesignWidth = 375;
-  double kDesignHeight = 812;
+    double kDesignWidth = 375;
+    double kDesignHeight = 812;
 
     final double _widthScale = MediaQuery.of(context).size.width / kDesignWidth;
     final double _heightScale =
@@ -183,9 +182,10 @@ class _ScreenBioState extends State<ScreenBio> {
                         ),
                       ),
                       Container(
-                        height: 190 * _heightScale,
+                        //  height: 190 * _heightScale,
                         // width: double.infinity,
                         child: ListView.builder(
+                            shrinkWrap: true,
                             itemCount:
                                 // 10,
                                 widget.skills.length,

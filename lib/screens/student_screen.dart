@@ -22,7 +22,18 @@ class _StudentScreenState extends State<StudentScreen> {
 
     //= 'Btech';
   }
-
+  bool show = false;
+  @override
+  void initState() {
+    super.initState();
+    focusNode.addListener(() {
+      if (focusNode.hasFocus) {
+        setState(() {
+          show = false;
+        });
+      }
+    });
+  }
   var deta;
   select(var value) {
     setState(() {
@@ -30,6 +41,8 @@ class _StudentScreenState extends State<StudentScreen> {
     });
   }
 
+  FocusNode focusNode = FocusNode();
+  TextEditingController _controller = TextEditingController();
   @override
   Widget build(BuildContext context) {
     final double _widthScale = MediaQuery.of(context).size.width / kDesignWidth;
@@ -94,6 +107,14 @@ class _StudentScreenState extends State<StudentScreen> {
               padding: EdgeInsets.symmetric(horizontal: _widthScale * 24),
               child: ElevatedButton(
                 onPressed: () {
+                        if (!show) {
+                      focusNode.unfocus();
+                      focusNode.canRequestFocus = false;
+                    }
+                    setState(() {
+                      show = !show;
+                   //  _controller.clear();
+                    });
                   select('BTech');
                   // Navigator.push(context,
                   //     MaterialPageRoute(builder: (context) => Verification()));
@@ -126,6 +147,13 @@ class _StudentScreenState extends State<StudentScreen> {
               padding: EdgeInsets.symmetric(horizontal: _widthScale * 24),
               child: ElevatedButton(
                 onPressed: () {
+                         if (!show) {
+                      focusNode.unfocus();
+                      focusNode.canRequestFocus = false;
+                    }
+                    setState(() {
+                      show = !show;
+                    });
                   select('BBA');
                   // Navigator.push(context,
                   //     MaterialPageRoute(builder: (context) => Verification()));
@@ -158,6 +186,13 @@ class _StudentScreenState extends State<StudentScreen> {
               padding: EdgeInsets.symmetric(horizontal: _widthScale * 24),
               child: ElevatedButton(
                 onPressed: () {
+                         if (!show) {
+                      focusNode.unfocus();
+                      focusNode.canRequestFocus = false;
+                    }
+                    setState(() {
+                      show = !show;
+                    });
                   select('BArch');
                   // Navigator.push(context,
                   //     MaterialPageRoute(builder: (context) => Verification()));
@@ -186,36 +221,110 @@ class _StudentScreenState extends State<StudentScreen> {
             SizedBox(
               height: _heightScale * 20,
             ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: _widthScale * 24),
-              child: ElevatedButton(
-                onPressed: () {
-                  select('Other');
-                  // Navigator.push(context,
-                  //     MaterialPageRoute(builder: (context) => Verification()));
-                },
-                style: ElevatedButton.styleFrom(
-                  side: BorderSide(width: 1, color: Color(0xFFCCCCCC)),
-                  primary:  deta == 'Other' ? BoxColor.PurpleBox(context): Color(0xFFFFFFFF),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                ),
-                child: Container(
-                  height: _heightScale * 56,
-                  width: _widthScale * 328,
-                  alignment: Alignment.center,
-                  child: Text(
-                    'Other',
-                    style: GoogleFonts.poppins(
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: _widthScale * 24),
+                child: TextField(
+                  focusNode: focusNode,
+                  cursorColor: Color(0xFF775594),
+                  onTap: () {
+                    deta = 'Other';
+                  },
+                  onChanged: (val) {
+                    select(_controller.text);
+                  },
+                  controller: _controller,
+                  textAlign: TextAlign.center,
+                  autofocus: false,
+                  style: TextStyle(
+                      fontSize: _widthScale * 15.0,
+                      color: Color(0xFF775594),
+                      fontWeight: FontWeight.w600),
+                  decoration: InputDecoration(
+                    filled: true,
+                    fillColor: Colors.white,
+                    hintText: 'Other',
+                    hintStyle: GoogleFonts.poppins(
                         textStyle: TextStyle(
-                            fontSize: _widthScale * 18,
-                            fontWeight: FontWeight.w600,
-                            color: deta == 'Other' ? Colors.white: col)),
+                            fontSize: _widthScale * 16,
+                            color: Color(0xFFB6B6B6),
+                            fontWeight: FontWeight.w600)),
+                    contentPadding: EdgeInsets.only(
+                        bottom: _heightScale * 16.0, top: _heightScale * 16.0),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(color: Color(0xFF775594)),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(color: Color(0xFFCCCCCC)),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    // UnderlineInputBorder(
+                    //   borderSide: const BorderSide(color: Color(0xFFCCCCCC)),
+                    //   borderRadius: BorderRadius.circular(6),
+                    // ),
                   ),
                 ),
+
+                //  ElevatedButton(
+                //   onPressed: () {
+                //     select('Other');
+                //     // Navigator.push(context,
+                //     //     MaterialPageRoute(builder: (context) => Verification()));
+                //   },
+                //   style: ElevatedButton.styleFrom(
+                //     side: BorderSide(width: 1, color: Color(0xFFCCCCCC)),
+                //     primary: profess == "Other"
+                //         ? BoxColor.PurpleBox(context)
+                //         : Color(0xFFFFFFFF),
+                //     shape: RoundedRectangleBorder(
+                //       borderRadius: BorderRadius.circular(10.0),
+                //     ),
+                //   ),
+                //   child: Container(
+                //     height: _heightScale * 56,
+                //     width: _widthScale * 328,
+                //     alignment: Alignment.center,
+                //     child: Text(
+                //       'Other',
+                //       style: GoogleFonts.poppins(
+                //           textStyle: TextStyle(
+                //               fontSize: _widthScale * 18,
+                //               fontWeight: FontWeight.w600,
+                //               color: profess == "Other" ? Colors.white : col)),
+                //     ),
+                //   ),
+                // ),
               ),
-            ),
+            // Padding(
+            //   padding: EdgeInsets.symmetric(horizontal: _widthScale * 24),
+            //   child: ElevatedButton(
+            //     onPressed: () {
+            //       select('Other');
+            //       // Navigator.push(context,
+            //       //     MaterialPageRoute(builder: (context) => Verification()));
+            //     },
+            //     style: ElevatedButton.styleFrom(
+            //       side: BorderSide(width: 1, color: Color(0xFFCCCCCC)),
+            //       primary:  deta == 'Other' ? BoxColor.PurpleBox(context): Color(0xFFFFFFFF),
+            //       shape: RoundedRectangleBorder(
+            //         borderRadius: BorderRadius.circular(10.0),
+            //       ),
+            //     ),
+            //     child: Container(
+            //       height: _heightScale * 56,
+            //       width: _widthScale * 328,
+            //       alignment: Alignment.center,
+            //       child: Text(
+            //         'Other',
+            //         style: GoogleFonts.poppins(
+            //             textStyle: TextStyle(
+            //                 fontSize: _widthScale * 18,
+            //                 fontWeight: FontWeight.w600,
+            //                 color: deta == 'Other' ? Colors.white: col)),
+            //       ),
+            //     ),
+            //   ),
+            // ),
             SizedBox(
               height: _heightScale * 28,
             ),

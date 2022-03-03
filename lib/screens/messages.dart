@@ -21,9 +21,18 @@ class MessageScreen extends StatefulWidget {
   _MessageScreenState createState() => _MessageScreenState();
 }
 
-class _MessageScreenState extends State<MessageScreen> {
+class _MessageScreenState extends State<MessageScreen>
+    with TickerProviderStateMixin {
   late IO.Socket socket;
+  late AnimationController animationController;
   // var response;
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    animationController.dispose();
+  }
+
   @override
   void initState() {
     // TODO: implement initState
@@ -34,6 +43,9 @@ class _MessageScreenState extends State<MessageScreen> {
     //     "autoConnect": false,
     //   });
     connect();
+    animationController =
+        AnimationController(duration: const Duration(seconds: 3), vsync: this);
+    animationController.repeat();
   }
 
   var profil;
@@ -43,30 +55,18 @@ class _MessageScreenState extends State<MessageScreen> {
     res = await getdummy(1, tokenProfile?.token);
     print('buddyyyyy${res['isBuddy']}');
     print('userId${profil['_id']}');
+    return res;
   }
 
   // List msgs = [];
   connect() async {
-    await userid();
+    //   await userid();
     socket =
         IO.io("https://sheltered-earth-76230.herokuapp.com", <String, dynamic>{
       "transports": ["websocket"],
       "autoConnect": false,
     });
     socket.connect();
-
-    // List.generate(msg.length, (index) {
-    //   if (msg[index]['sender'] == profil['_id']) {
-    //     print('source');
-    //     setMessage("source", msg[index]['message']);
-
-    //   }
-    //   if (msg[index]['sender'] == res['data']['_id']) {
-    //     print('destination');
-
-    //     setMessage("destination", msg[index]['message']);
-    //   }
-    // });
   }
 
   var pp;
@@ -139,88 +139,92 @@ class _MessageScreenState extends State<MessageScreen> {
         body: FutureBuilder(
             future: userid(),
             builder: (context, snapShot) {
-              return
-               res == null ? Center(child: CircularProgressIndicator()):
-               res['isBuddy'] == false
-                  ? Padding(
-                      padding: const EdgeInsets.all(100.0),
-                      child: Container(
-                        child: Text(
-                          'No Buddy Found',
-                          style: GoogleFonts.poppins(
-                            color: const Color(0xFF5E3E79),
-                            fontSize: _widthScale * 20,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ),
-                    )
-                  : Padding(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: _widthScale * 23),
-                      child: Column(
-                        children: [
-                          SizedBox(
-                            height: _heightScale * 24,
-                          ),
-                          SingleChildScrollView(
-                            scrollDirection: Axis.horizontal,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                profile(),
-                                // SizedBox(
-                                //   width: _widthScale * 31,
-                                // ),
-                                // profile(),
-                                // SizedBox(
-                                //   width: _widthScale * 31,
-                                // ),
-                                // profile(),
-                                // SizedBox(
-                                //   width: _widthScale * 31,
-                                // ),
-                                // profile(),
-                                // SizedBox(
-                                //   width: _widthScale * 31,
-                                // ),
-                                // profile(),
-                                // SizedBox(
-                                //   width: _widthScale * 31,
-                                // ),
-                              ],
+              return res == null
+                  ? Center(
+                      child: CircularProgressIndicator(
+                          valueColor: animationController.drive(ColorTween(
+                              begin: Color(0xFFA585C1),
+                              end: Color(0xFFB9B9B9)))))
+                  : res['isBuddy'] == false
+                      ? Padding(
+                          padding: const EdgeInsets.all(100.0),
+                          child: Container(
+                            child: Text(
+                              'No Buddy Found',
+                              style: GoogleFonts.poppins(
+                                color: const Color(0xFF5E3E79),
+                                fontSize: _widthScale * 20,
+                                fontWeight: FontWeight.w600,
+                              ),
                             ),
                           ),
-                          SizedBox(
-                            height: _heightScale * 11,
-                          ),
-                          Row(
+                        )
+                      : Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: _widthScale * 23),
+                          child: Column(
                             children: [
-                              Text(
-                                " If the receiver dosen’t reply in 24hrs the chat will disappear",
-                                style: GoogleFonts.poppins(
-                                  color: const Color(0xFF5E3E79),
-                                  fontSize: _widthScale * 10,
-                                  fontWeight: FontWeight.w400,
+                              SizedBox(
+                                height: _heightScale * 24,
+                              ),
+                              SingleChildScrollView(
+                                scrollDirection: Axis.horizontal,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    profile(),
+                                    // SizedBox(
+                                    //   width: _widthScale * 31,
+                                    // ),
+                                    // profile(),
+                                    // SizedBox(
+                                    //   width: _widthScale * 31,
+                                    // ),
+                                    // profile(),
+                                    // SizedBox(
+                                    //   width: _widthScale * 31,
+                                    // ),
+                                    // profile(),
+                                    // SizedBox(
+                                    //   width: _widthScale * 31,
+                                    // ),
+                                    // profile(),
+                                    // SizedBox(
+                                    //   width: _widthScale * 31,
+                                    // ),
+                                  ],
                                 ),
                               ),
+                              SizedBox(
+                                height: _heightScale * 11,
+                              ),
+                              Row(
+                                children: [
+                                  Text(
+                                    " If the receiver dosen’t reply in 24hrs the chat will disappear",
+                                    style: GoogleFonts.poppins(
+                                      color: const Color(0xFF5E3E79),
+                                      fontSize: _widthScale * 10,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                height: _heightScale * 11,
+                              ),
+                              Container(
+                                height: _heightScale * 1,
+                                width: double.infinity,
+                                color: const Color(0xFFABABAB),
+                              ),
+                              SizedBox(
+                                height: _heightScale * 11,
+                              ),
+                              people(),
                             ],
                           ),
-                          SizedBox(
-                            height: _heightScale * 11,
-                          ),
-                          Container(
-                            height: _heightScale * 1,
-                            width: double.infinity,
-                            color: const Color(0xFFABABAB),
-                          ),
-                          SizedBox(
-                            height: _heightScale * 11,
-                          ),
-                          people(),
-                        ],
-                      ),
-                    );
+                        );
             }));
   }
 
@@ -230,22 +234,37 @@ class _MessageScreenState extends State<MessageScreen> {
     double _widthScale = MediaQuery.of(context).size.width / kDesignWidth;
     double _heightScale = MediaQuery.of(context).size.height / kDesignHeight;
 
-    return FutureBuilder(
-        future: userid(),
-        builder: (context, snapShot) {
-          return CircleAvatar(
-            foregroundColor: Colors.white,
-            backgroundColor: Color(0xFFB9B9B9),
-            radius: 36 * _widthScale,
+    return Container(
+      height: 100 * _heightScale,
+      width: 330,
+      child: ListView.builder(
+          scrollDirection: Axis.horizontal,
+          shrinkWrap: true,
+          itemCount: res['buddydetails'] == null
+              ? res['data'] == null
+                  ? 0
+                  : 1
+              : res['buddydetails'].length,
+          itemBuilder: (context, index) {
+            return Padding(
+              padding: EdgeInsets.symmetric(horizontal: _widthScale * 10),
+              child: CircleAvatar(
+                foregroundColor: Colors.white,
+                backgroundColor: Color(0xFFB9B9B9),
+                radius: 36 * _widthScale,
 
-            backgroundImage: res == null
-                ? NetworkImage('')
-                : NetworkImage(res['buddydetails'][0]['image']['location']),
+                backgroundImage: res == null
+                    ? NetworkImage('')
+                    : NetworkImage(res['buddydetails'] != null
+                        ? res['buddydetails'][index]['image']['location']
+                        : res['data']['image']['location']),
 
-            //  backgroundImage:FileImage(uploads/97c31224-185c-4399-b050-27c9f2fd4ae9.png),
-            //    AssetImage('97c31224-185c-4399-b050-27c9f2fd4ae9.png')
-          );
-        });
+                //  backgroundImage:FileImage(uploads/97c31224-185c-4399-b050-27c9f2fd4ae9.png),
+                //    AssetImage('97c31224-185c-4399-b050-27c9f2fd4ae9.png')
+              ),
+            );
+          }),
+    );
   }
 
   Widget people() {
@@ -254,86 +273,112 @@ class _MessageScreenState extends State<MessageScreen> {
     double _widthScale = MediaQuery.of(context).size.width / kDesignWidth;
     double _heightScale = MediaQuery.of(context).size.height / kDesignHeight;
 
-    return FutureBuilder(
-        future: userid(),
-        builder: (context, snapShot) {
-          return GestureDetector(
-            onTap: () {
-              socket.dispose();
-              //  await connect();
-              // print('lopi$msgs');
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => IndividualPage(
-                            name: res['buddydetails'][0]['username'],
-                            userid: profil['_id'],
-                            buddyid: res['buddydetails'][0]['_id'],
-                            buddyimage: res['buddydetails'][0]['image']['location'],
-                          )
-                      // IndividMessageScreen(name: name)
-                      //IndividMessageScreen(name: res['data']['username'],)
-                      ));
-            },
-            child: Container(
-              width: _widthScale * 328,
-              height: _heightScale * 78,
-              decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.4),
-                // border: Border.all(
-                //   color: Color(0xFFA585C1),
-                // ),
-                borderRadius: BorderRadius.all(Radius.circular(5)),
-              ),
-              child: Row(
-                children: [
-                  SizedBox(
-                    width: 10 * _widthScale,
-                  ),
-                  CircleAvatar(
-                    foregroundColor: Colors.white,
-                    backgroundColor: Color(0xFFB9B9B9),
-                    radius: 25 * _widthScale,
+    return ListView.builder(
+        shrinkWrap: true,
+        itemCount: res['buddydetails'] == null
+            ? res['data'] == null
+                ? 0
+                : 1
+            : res['buddydetails'].length,
+        itemBuilder: (context, index) {
+          return Padding(
+            padding: EdgeInsets.symmetric(vertical: 4 * _heightScale),
+            child: GestureDetector(
+              onTap: () async{
+                socket.dispose();
+                 await connect();
+                // print('lopi$msgs');
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => IndividualPage(
+                              ind: res['buddydetails'] == null
+                                  ? res['data'] == null
+                                      ? 0
+                                      : 0
+                                  : res['buddydetails'].length - 1 - index,
+                              name: res['buddydetails'] != null
+                                  ? res['buddydetails'][index]['username']
+                                  : res['data']['username'],
+                              userid: profil['_id'],
+                              buddyid: res['buddydetails'] != null
+                                  ? res['buddydetails'][index]['_id']
+                                  : res['data']['_id'],
+                              buddyimage: res['buddydetails'] != null
+                                  ? res['buddydetails'][index]['image']
+                                      ['location']
+                                  : res['data']['image']['location'],
+                            )
+                        // IndividMessageScreen(name: name)
+                        //IndividMessageScreen(name: res['data']['username'],)
+                        ));
+              },
+              child: Container(
+                width: _widthScale * 328,
+                height: _heightScale * 78,
+                decoration: BoxDecoration(
+                  color: Colors.white.withOpacity(0.4),
+                  // border: Border.all(
+                  //   color: Color(0xFFA585C1),
+                  // ),
+                  borderRadius: BorderRadius.all(Radius.circular(5)),
+                ),
+                child: Row(
+                  children: [
+                    SizedBox(
+                      width: 10 * _widthScale,
+                    ),
+                    CircleAvatar(
+                      foregroundColor: Colors.white,
+                      backgroundColor: Color(0xFFB9B9B9),
+                      radius: 25 * _widthScale,
 
-                    backgroundImage: res == null
-                        ? NetworkImage('')
-                        : NetworkImage(res['buddydetails'][0]['image']['location']),
+                      backgroundImage: res == null
+                          ? NetworkImage('')
+                          : NetworkImage(res['buddydetails'] != null
+                              ? res['buddydetails'][index]['image']['location']
+                              : res['data']['image']['location']),
 
-                    //  backgroundImage:FileImage(uploads/97c31224-185c-4399-b050-27c9f2fd4ae9.png),
-                    //    AssetImage('97c31224-185c-4399-b050-27c9f2fd4ae9.png')
-                  ),
-                  SizedBox(
-                    width: 10 * _widthScale,
-                  ),
-                  Column(
-                    children: [
-                      SizedBox(
-                        height: 15 * _heightScale,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Text(
-                            res == null ? " " : res['buddydetails'][0]['username'],
-                            style: GoogleFonts.poppins(
-                              color: const Color(0xFF5E3E79),
-                              fontSize: _widthScale * 18,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ],
-                      ),
-                      Text(
-                        " Lorem ipsum dolor sit amet, consectetur.r",
-                        style: GoogleFonts.poppins(
-                          color: const Color(0xFF263238),
-                          fontSize: _widthScale * 10,
-                          fontWeight: FontWeight.w400,
+                      //  backgroundImage:FileImage(uploads/97c31224-185c-4399-b050-27c9f2fd4ae9.png),
+                      //    AssetImage('97c31224-185c-4399-b050-27c9f2fd4ae9.png')
+                    ),
+                    SizedBox(
+                      width: 10 * _widthScale,
+                    ),
+                    Column(
+                      children: [
+                        SizedBox(
+                          height: 15 * _heightScale,
                         ),
-                      ),
-                    ],
-                  )
-                ],
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text(
+                              res == null
+                                  ? " "
+                                  : res['buddydetails'] != null
+                                      ? res['buddydetails'][index]['username']
+                                      : res['data']['username'],
+                              style: GoogleFonts.poppins(
+                                color: const Color(0xFF5E3E79),
+                                fontSize: _widthScale * 18,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ],
+                        ),
+                        Text(
+                          " Lorem ipsum dolor sit amet, consectetur.r",
+                          style: GoogleFonts.poppins(
+                            color: const Color(0xFF263238),
+                            fontSize: _widthScale * 10,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                      ],
+                    )
+                  ],
+                ),
               ),
             ),
           );

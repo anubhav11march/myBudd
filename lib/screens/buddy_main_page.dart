@@ -294,7 +294,7 @@ class _MainPageState extends State<MainPage> {
                 onTap: () {
                   final provider =
                       Provider.of<CardProvider>(context, listen: false);
-                     provider.superLike();
+                  provider.superLike();
                   //               final rotatedMatrix = Matrix4.identity()
                   //   ..translate(0, 0)
                   //   ..rotateZ(40)
@@ -406,8 +406,15 @@ class _MainPageState extends State<MainPage> {
         // Future.delayed(Duration(milliseconds: 5000));
 
         if (response['body']['message'] == "It's a Match!") {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => BuddyMatchScreen()));
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => BuddyMatchScreen(
+                      id: response['body']['data']['matchdoc']['_id'],
+                      swipeid:response['body']['data']['swipedon']['_id'] ,
+                      name:response['body']['data']['swipedon']['username'],
+                      image: response['body']['data']['swipedon']['image']['location'],
+                      )));
         } else if (response['body']['message'] == "Swiped Successfuly!") {
           print('bhjvjv');
         }
@@ -486,9 +493,9 @@ class _MainPageState extends State<MainPage> {
                             fontWeight: FontWeight.w600,
                             fontSize: 20 * _widthScale),
                       ),
-                      onTap: () {
-                        Navigator.of(context).pushNamed(BuddyMatchScreen.route);
-                      },
+                      // onTap: () {
+                      //   Navigator.of(context).pushNamed(BuddyMatchScreen.route);
+                      // },
                     )
                   : filter.isEmpty
                       ? const CircularProgressIndicator(
@@ -573,9 +580,10 @@ class _MainPageState extends State<MainPage> {
           Navigator.of(context).pushReplacementNamed(ProfileScreen.route);
         } else if (index == 1) {
           Navigator.of(context).pushReplacementNamed(MainPage.route);
-        } else if (index == 2) {
-          Navigator.of(context).pushReplacementNamed(BuddyMatchScreen.route);
         }
+        //  else if (index == 2) {
+        //   Navigator.of(context).pushReplacementNamed(BuddyMatchScreen.route);
+        // }
       },
       child: Column(
         children: [

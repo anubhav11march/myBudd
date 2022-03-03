@@ -51,8 +51,8 @@ class _CustomChallengeState extends State<CustomChallenge> {
                         fontSize: 20 * _widthScale,
                         fontWeight: FontWeight.w600),
                   ),
-                  const SizedBox(
-                    height: 10,
+                  SizedBox(
+                    height: 5 * _heightScale,
                   ),
                   Container(
                     height: _heightScale * 5,
@@ -85,7 +85,7 @@ class _CustomChallengeState extends State<CustomChallenge> {
                         fontWeight: FontWeight.w600),
                   ),
                   SizedBox(
-                    height: 10,
+                    height: 5 * _heightScale,
                   ),
                   Container(
                     height: _heightScale * 5,

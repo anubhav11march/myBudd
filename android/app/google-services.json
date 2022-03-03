@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "935735394783",
+    "project_id": "test-mybud",
+    "storage_bucket": "test-mybud.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:935735394783:android:8ea1abf1c6b57d2abf046a",
+        "android_client_info": {
+          "package_name": "com.mybudd.mybud"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "935735394783-079md9i27qa407iu92hi3bbm5014kifk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCbwU-27boRV8yj3bpckY-d5QLG6zzU2CA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "935735394783-079md9i27qa407iu92hi3bbm5014kifk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -7,6 +7,7 @@ import 'package:mybud/theme_modules/box_color.dart';
 import 'package:mybud/widgets/error_snackbar.dart';
 
 class SignUpScreen extends StatefulWidget {
+   static const String route = '/signup_screen';
   const SignUpScreen({Key? key}) : super(key: key);
 
   @override

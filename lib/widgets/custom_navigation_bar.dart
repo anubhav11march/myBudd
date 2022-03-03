@@ -12,6 +12,7 @@ import 'package:mybud/screens/messages.dart';
 import 'package:mybud/screens/notification_screen.dart';
 import 'package:mybud/screens/objective_two_screen.dart';
 import 'package:mybud/screens/profile.dart';
+import 'package:mybud/screens/search_buddy_screen.dart';
 import 'package:mybud/widgets/app_drawer.dart';
 import 'package:mybud/widgets/custom_challenge_button.dart';
 import 'package:mybud/widgets/ii.dart';
@@ -103,107 +104,108 @@ class _Nav1State extends State<Nav1> {
           appBar: _selectedIndex == 2
               ? null
               : AppBar(
-                  leading: Builder(builder: (context) {
-                    return InkWell(
-                      onTap: () => Scaffold.of(context).openDrawer(),
-                      child: Image.asset(
-                        "assets/Vector (1).png",
-                        height: _heightScale * 23,
-                        width: _widthScale * 22,
-                      ),
-                    );
-                  }),
+                  // leading:
                   title: Row(
                     children: [
-                      SizedBox(width: 4 * _widthScale),
-                      Container(
-                        child: Row(
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.only(
-                                  left: 50 * _widthScale,
-                                  top: 6 * _heightScale,
-                                  bottom: 6 * _heightScale),
-                              child: Text(
+                      Builder(builder: (context) {
+                        return InkWell(
+                          onTap: () => Scaffold.of(context).openDrawer(),
+                          child: Image.asset(
+                            "assets/Vector (1).png",
+                            height: _heightScale * 23,
+                            width: _widthScale * 22,
+                          ),
+                        );
+                      }),
+                      SizedBox(width: 15 * _widthScale),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => SearchBuddyScreen()));
+                        },
+                        child: Container(
+                          child: Row(
+                            //   mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              SizedBox(
+                                width: 78 * _widthScale,
+                              ),
+                              Text(
                                 'Mybudd',
                                 style: GoogleFonts.poppins(
                                     color: Color(0xFF7B2CBF).withOpacity(0.3),
                                     fontWeight: FontWeight.w600,
                                     fontSize: 14 * _widthScale),
                               ),
-                            ),
-                            SizedBox(
-                              width: 24 * _widthScale,
-                            ),
-                            Padding(
-                              padding: EdgeInsets.only(
-                                  top: 6 * _heightScale,
-                                  bottom: 6 * _heightScale),
-                              child: Image.asset('assets/Group (3).png'),
+                              SizedBox(
+                                width: 61 * _widthScale,
+                              ),
+                              Padding(
+                                padding: EdgeInsets.only(
+                                    top: 6 * _heightScale,
+                                    bottom: 6 * _heightScale),
+                                child: Image.asset('assets/Group (3).png'),
 
-                              // AssetImage('')
-                            ),
-                          ],
+                                // AssetImage('')
+                              ),
+                            ],
+                          ),
+                          height: 33 * _heightScale,
+                          width: 221 * _widthScale,
+                          decoration: BoxDecoration(
+                              border: Border(
+                                top: BorderSide(
+                                    color: Color(0xFFC5C5C5),
+                                    width: 1 * _widthScale,
+                                    style: BorderStyle.solid),
+                                left: BorderSide(
+                                    color: Color(0xFFC5C5C5),
+                                    width: 1 * _widthScale,
+                                    style: BorderStyle.solid),
+                                bottom: BorderSide(
+                                    color: Color(0xFFC5C5C5),
+                                    width: 1 * _widthScale,
+                                    style: BorderStyle.solid),
+                                right: BorderSide(
+                                    color: Color(0xFFC5C5C5),
+                                    width: 1 * _widthScale,
+                                    style: BorderStyle.solid),
+                              ),
+                              borderRadius:
+                                  BorderRadius.circular(17 * _widthScale)),
                         ),
-                        height: 33 * _heightScale,
-                        width: 159 * _widthScale,
-                        decoration: BoxDecoration(
-                            border: Border(
-                              top: BorderSide(
-                                  color: Color(0xFFC5C5C5),
-                                  width: 1 * _widthScale,
-                                  style: BorderStyle.solid),
-                              left: BorderSide(
-                                  color: Color(0xFFC5C5C5),
-                                  width: 1 * _widthScale,
-                                  style: BorderStyle.solid),
-                              bottom: BorderSide(
-                                  color: Color(0xFFC5C5C5),
-                                  width: 1 * _widthScale,
-                                  style: BorderStyle.solid),
-                              right: BorderSide(
-                                  color: Color(0xFFC5C5C5),
-                                  width: 1 * _widthScale,
-                                  style: BorderStyle.solid),
-                            ),
-                            borderRadius:
-                                BorderRadius.circular(17 * _widthScale)),
                       ),
-                      SizedBox(width: 50 * _widthScale),
-                      Row(
-                        children: [
-                          InkWell(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => HomeScreen()));
-                              //  Navigator.of(context).pushNamed(NotificationScreen.route);
-                            },
-                            child: Image.asset(
-                              "assets/Vector (5).png",
-                              height: _heightScale * 23,
-                              width: _widthScale * 22,
-                            ),
-                          ),
-                          SizedBox(
-                            width: 15 * _widthScale,
-                          ),
-                          InkWell(
-                              onTap: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => ProfileScreen()));
-                                //  Navigator.of(context).pushNamed(NotificationScreen.route);
-                              },
-                              child: Icon(
-                                Icons.account_circle_rounded,
-                                color: Color(0xFFA585C1),
-                                size: 30 * _widthScale,
-                              )),
-                        ],
+                      SizedBox(width: 15 * _widthScale),
+                      // SizedBox(width: 50 * _widthScale),
+                      InkWell(
+                        onTap: () {
+                                                    //  Navigator.of(context).pushNamed(NotificationScreen.route);
+                        },
+                        child: Image.asset(
+                          "assets/Vector (5).png",
+                          height: _heightScale * 23,
+                          width: _widthScale * 22,
+                        ),
                       ),
+                      SizedBox(width: 15 * _widthScale),
+                      // SizedBox(
+                      //   width: 15 * _widthScale,
+                      // ),
+                      InkWell(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => ProfileScreen()));
+                            //  Navigator.of(context).pushNamed(NotificationScreen.route);
+                          },
+                          child: Icon(
+                            Icons.account_circle_rounded,
+                            color: Color(0xFFA585C1),
+                            size: 30 * _widthScale,
+                          )),
                     ],
                   ),
                   //  centerTitle: true,

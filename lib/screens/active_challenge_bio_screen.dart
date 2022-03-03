@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:mybud/api_service/delete_challenges.dart';
+import 'package:mybud/api_service/get_user_challenges.dart';
 import 'package:mybud/api_service/post_user_attendance.dart';
 import 'package:mybud/screens/to_do_list_screen.dart';
 import 'package:mybud/theme_modules/box_color.dart';
 import 'package:mybud/widgets/custom_navigation_bar.dart';
 import 'package:mybud/widgets/token_profile.dart';
-import 'package:syncfusion_flutter_calendar/calendar.dart';
+//import 'package:syncfusion_flutter_calendar/calendar.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class ActiveChallengeScreen extends StatefulWidget {
@@ -14,11 +17,15 @@ class ActiveChallengeScreen extends StatefulWidget {
   var startdate;
   var enddate;
   var counts;
+  var id;
+  var comp;
   ActiveChallengeScreen(
       {required this.name,
       required this.startdate,
       required this.enddate,
-      required this.counts});
+      required this.counts,
+      required this.id,
+      required this.comp });
   // const ActiveChallengeScreen({Key? key}) : super(key: key);
 
   @override
@@ -26,14 +33,54 @@ class ActiveChallengeScreen extends StatefulWidget {
 }
 
 class _ActiveChallengeScreenState extends State<ActiveChallengeScreen> {
+  bool isLO = false;
+  bool isL = false;
+
   attend() async {
     var atten = await PostAttendance.verify(widget.name, tokenProfile?.token);
 
-    Navigator.push(context, MaterialPageRoute(builder: (context) => Nav1(ino: 2,)));
+    if (atten['success'] == false) {
+      Fluttertoast.showToast(msg: atten['error']);
+    } else {
+      Fluttertoast.showToast(msg: atten['message']);
+    }
+
+    setState(() {
+      isLO = false;
+    });
+
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => Nav1(
+                  ino: 2,
+                )));
+  }
+
+  delete(namess) async {
+    var challdelete = await getDelete(tokenProfile?.token, namess);
+
+    setState(() {
+      isL = false;
+    });
+
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => Nav1(
+                  ino: 2,
+                )));
   }
 
   Widget build(BuildContext context) {
-    print('popo${widget.counts}');
+    print(
+        'endddddd%${DateTime.now().toString().replaceRange(0, 8, '').replaceRange(2, 18, '')}');
+    print(
+        'enddddd%${DateTime.now().toString().replaceRange(0, 5, '').replaceRange(2, 21, '')}');
+    print(
+        'endddddddyd${widget.enddate.toString().replaceRange(0, 5, '').replaceRange(2, 5, '')}');
+    print(
+        'endddddddydsss${widget.enddate.toString().replaceRange(0, 8, '').replaceRange(2, 2, '')}');
     const double kDesignWidth = 375;
     const double kDesignHeight = 812;
     double _widthScale = MediaQuery.of(context).size.width / kDesignWidth;
@@ -472,65 +519,100 @@ class _ActiveChallengeScreenState extends State<ActiveChallengeScreen> {
               ],
             ),
             SizedBox(
-              height: 100 * _heightScale,
+              height: 50 * _heightScale,
             ),
-            Row(
+            Column(
               children: [
-                Padding(
-                  padding: EdgeInsets.only(left: 21.0 * _widthScale),
-                  child: ElevatedButton(
-                    onPressed: () async {
-                      await attend();
-                      //   _onSubmit(context);
-                    },
-                    style: ElevatedButton.styleFrom(
-                      primary: BoxColor.PurpleBox(context),
-                      shape: new RoundedRectangleBorder(
-                        borderRadius: new BorderRadius.circular(10.0),
+                //  if(widget.enddate == )
+                // if (int.parse(widget.enddate
+                //             .toString()
+                //             .replaceRange(0, 5, '')
+                //             .replaceRange(2, 5, '')) >=
+                //         int.parse(DateTime.now()
+                //             .toString()
+                //             .replaceRange(0, 5, '')
+                //             .replaceRange(2, 21, '')) &&
+                //     int.parse(widget.enddate
+                //             .toString()
+                //             .replaceRange(0, 8, '')
+                //             .replaceRange(2, 2, '')) >=
+                //         int.parse(DateTime.now()
+                //             .toString()
+                //             .replaceRange(0, 8, '')
+                //             .replaceRange(2, 18, '')))
+                if(widget.comp == false)
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                        vertical: 4 * _heightScale,
+                        horizontal: 22 * _widthScale),
+                    child: ElevatedButton(
+                      onPressed: () async {
+                        setState(() {
+                          isLO = true;
+                        });
+                        await attend();
+                        //   _onSubmit(context);
+                      },
+                      style: ElevatedButton.styleFrom(
+                        primary: BoxColor.PurpleBox(context),
+                        shape: new RoundedRectangleBorder(
+                          borderRadius: new BorderRadius.circular(10.0),
+                        ),
                       ),
-                    ),
-                    child: Container(
-                      alignment: Alignment.center,
-                      height: _heightScale * 56,
-                      width: _widthScale * 130,
-                      child: Text(
-                        'Done !',
-                        textAlign: TextAlign.center,
-                        style: GoogleFonts.poppins(
-                            textStyle: TextStyle(
-                                fontSize: 22 * _widthScale,
-                                fontWeight: FontWeight.w600)),
+                      child: Container(
+                        alignment: Alignment.center,
+                        height: _heightScale * 56,
+                        width: _widthScale * 330,
+                        child: isLO == true
+                            ? CircularProgressIndicator(color: Colors.white)
+                            : Text(
+                                'I did this today !',
+                                textAlign: TextAlign.center,
+                                style: GoogleFonts.poppins(
+                                    textStyle: TextStyle(
+                                        fontSize: 22 * _widthScale,
+                                        fontWeight: FontWeight.w600)),
+                              ),
                       ),
                     ),
                   ),
-                ),
                 SizedBox(
                   width: 6 * _heightScale,
                 ),
                 Padding(
-                  padding: EdgeInsets.only(right: 21.0 * _widthScale),
+                  padding: EdgeInsets.symmetric(
+                      vertical: 4 * _heightScale, horizontal: 22 * _widthScale),
                   child: ElevatedButton(
-                    onPressed: () {
+                    onPressed: () async {
+                      setState(() {
+                        isL = true;
+                      });
+                      await delete(widget.id);
                       //   _onSubmit(context);
                     },
                     style: ElevatedButton.styleFrom(
                       primary: Color(0xFFEF4C48),
-                      shape: new RoundedRectangleBorder(
-                        borderRadius: new BorderRadius.circular(10.0),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0),
                       ),
                     ),
                     child: Container(
                       alignment: Alignment.center,
                       height: _heightScale * 56,
-                      width: _widthScale * 130,
-                      child: Text(
-                        'Delete ',
-                        textAlign: TextAlign.center,
-                        style: GoogleFonts.poppins(
-                            textStyle: TextStyle(
-                                fontSize: 22 * _widthScale,
-                                fontWeight: FontWeight.w600)),
-                      ),
+                      width: _widthScale * 330,
+                      child: isL == true
+                          ? CircularProgressIndicator(
+                              color: Colors.white,
+                            )
+                          : Text(
+                              'Delete ',
+                              textAlign: TextAlign.center,
+                              style: GoogleFonts.poppins(
+                                textStyle: TextStyle(
+                                    fontSize: 22 * _widthScale,
+                                    fontWeight: FontWeight.w600),
+                              ),
+                            ),
                     ),
                   ),
                 )

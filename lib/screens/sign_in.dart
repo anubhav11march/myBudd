@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mybud/api_service/get_user_profile.dart';
 import 'package:mybud/api_service/sign_in.dart';
+import 'package:mybud/main.dart';
 import 'package:mybud/screens/buddy_main_page.dart';
 import 'package:mybud/screens/descibe_yourself_screen.dart';
 import 'package:mybud/screens/details_successful.dart';
+import 'package:mybud/screens/forget_pass_email.dart';
 import 'package:mybud/screens/onboarding.dart';
 import 'package:mybud/screens/profile_picture_upload.dart';
 import 'package:mybud/screens/sign_up.dart';
@@ -59,6 +61,8 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   _onSubmit(BuildContext context) async {
+    String? token = await firebaseMessaging.getToken();
+    print('FCM TOKEN : $token');
     if (_username.text.isEmpty) {
       const snackBar = SnackBar(
         backgroundColor: Color(0xFFA585C1),
@@ -80,10 +84,7 @@ class _LoginScreenState extends State<LoginScreen> {
       );
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
     } else {
-      var response = await LogIn.signIn(
-        _username.text,
-        _password.text,
-      );
+      var response = await LogIn.signIn(_username.text, _password.text, token);
       if (response['success'] == false &&
           response['error'] == 'All fields should be present!') {
         setState(() {
@@ -129,11 +130,10 @@ class _LoginScreenState extends State<LoginScreen> {
             loginPreference?.setLoginStat(false);
             loginPreference?.setLoginStatu(false);
             loginPreference?.setLoginStatus(true);
-                  Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => VerifiedScreen()),
-                      (route) => false);
+            Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (context) => VerifiedScreen()),
+                (route) => false);
             // Navigator.push(context,
             //     MaterialPageRoute(builder: (context) => VerifiedScreen()));
           } else if (res['Info'] == null && res['image'] != null) {
@@ -141,11 +141,11 @@ class _LoginScreenState extends State<LoginScreen> {
             loginPreference?.setLoginStat(true);
             loginPreference?.setLoginStatu(true);
             loginPreference?.setLoginStatus(true);
-              Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => DescribeYourselfScreen()),
-                      (route) => false);
+            Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => DescribeYourselfScreen()),
+                (route) => false);
             // Navigator.push(
             //     context,
             //     MaterialPageRoute(
@@ -156,11 +156,13 @@ class _LoginScreenState extends State<LoginScreen> {
             loginPreference?.setLoginStat(true);
             loginPreference?.setLoginStatu(true);
             loginPreference?.setLoginStatus(true);
-                  Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => Nav1(ino: 0,)),
-                      (route) => false);
+            Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => Nav1(
+                          ino: 0,
+                        )),
+                (route) => false);
             // Navigator.push(
             //     context,
             //     MaterialPageRoute(builder: (context) => Nav1()
@@ -361,7 +363,12 @@ class _LoginScreenState extends State<LoginScreen> {
                         Padding(
                           padding: EdgeInsets.only(left: 23.0 * _widthScale),
                           child: TextButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => VerifiyEmail()));
+                            },
                             child: Text(
                               "Forget your password?",
                               style: GoogleFonts.poppins(

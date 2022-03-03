@@ -116,7 +116,7 @@ class _DescribeYourselfScreenState extends State<DescribeYourselfScreen> {
                     }
                     setState(() {
                       show = !show;
-                      _controller.clear();
+                   //   _controller.clear();
                     });
                     select('Working Professional');
                     // Navigator.push(context,

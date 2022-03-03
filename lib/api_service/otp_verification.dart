@@ -13,6 +13,7 @@ class Otp {
     FormData formData = FormData.fromMap({
       'code': code,
       'email': email,
+      'type': 'verified'
     });
 
     var response = await dio.post(

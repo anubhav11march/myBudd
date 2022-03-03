@@ -2,6 +2,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mybud/api_service/get_user_image.dart';
 import 'package:mybud/api_service/get_user_profile.dart';
@@ -10,6 +11,7 @@ import 'package:mybud/screens/edit_profile.dart';
 import 'package:mybud/screens/edit_skills.dart';
 import 'package:mybud/widgets/custom_navigation_bar.dart';
 import 'package:mybud/widgets/token_profile.dart';
+import 'package:clipboard/clipboard.dart';
 
 class ProfileScreen extends StatefulWidget {
   static const String route = '/profile_screen';
@@ -19,15 +21,31 @@ class ProfileScreen extends StatefulWidget {
   _ProfileScreenState createState() => _ProfileScreenState();
 }
 
-class _ProfileScreenState extends State<ProfileScreen> {
+class _ProfileScreenState extends State<ProfileScreen>
+    with TickerProviderStateMixin {
   var response;
+  late AnimationController animationController;
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    animationController.dispose();
+  }
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     getData();
+    animationController =
+        AnimationController(duration: const Duration(seconds: 3), vsync: this);
+    animationController.repeat();
   }
+  // @override
+  // void initState() {
+  //   // TODO: implement initState
+  //   super.initState();
+  //   getData();
+  // }
 
   var res;
   var profile;
@@ -132,33 +150,38 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         width: double.infinity,
                         child: Center(
                             child: CircularProgressIndicator(
-                          color: Color(0xFFB9B9B9),
-                        )))
+                                valueColor: animationController.drive(
+                                    ColorTween(
+                                        begin: Color(0xFFA585C1),
+                                        end: Color(0xFFB9B9B9)))
+                                //  color: Color(0xFFA585C1),
+                                )))
                     : Column(
-                        //  mainAxisAlignment: MainAxisAlignment.end,
+                        //mainAxisAlignment: MainAxisAlignment.end,
+                        // crossAxisAlignment: CrossAxisAlignment.en,
                         children: [
                           SizedBox(
                             height: _heightScale * 29,
                           ),
                           Row(
-                            crossAxisAlignment: CrossAxisAlignment.end,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              //    uploads/97c31224-185c-4399-b050-27c9f2fd4ae9.png
+                              Align(
+                                alignment: Alignment.topLeft,
+                                child: CircleAvatar(
+                                  backgroundColor: Color(0xFFB9B9B9),
+                                  radius: _widthScale * 37.5,
 
-                              CircleAvatar(
-                                backgroundColor: Color(0xFFB9B9B9),
-                                radius: _widthScale * 32.5,
+                                  backgroundImage:
+                                      //  res == null ? NetworkImage(''):
+                                      NetworkImage(res),
 
-                                backgroundImage:
-                                    //  res == null ? NetworkImage(''):
-                                    NetworkImage(res),
-
-                                //  backgroundImage:FileImage(uploads/97c31224-185c-4399-b050-27c9f2fd4ae9.png),
-                                //    AssetImage('97c31224-185c-4399-b050-27c9f2fd4ae9.png')
+                                  //  backgroundImage:FileImage(uploads/97c31224-185c-4399-b050-27c9f2fd4ae9.png),
+                                  //    AssetImage('97c31224-185c-4399-b050-27c9f2fd4ae9.png')
+                                ),
                               ),
-
                               SizedBox(
-                                width: _widthScale * 203,
+                                width: 190 * _widthScale,
                               ),
                               InkWell(
                                 onTap: () {
@@ -201,9 +224,59 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             ],
                           ),
                           SizedBox(
-                            height: _heightScale * 29,
+                            height: _heightScale * 10,
                           ),
-                          fields("Your full name", profile['username']),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              // SizedBox(width: 10 * _widthScale),
+                              Text(
+                                'Buddy Id : ',
+                                style: GoogleFonts.poppins(
+                                  color: Color(0xFF828282),
+                                  fontSize: 14,
+                                ),
+                              ),
+                              Container(
+                                width: 180 * _widthScale,
+                                child: Text(
+                                  ' ${profile['buddyid']}',
+                                  style: GoogleFonts.poppins(
+                                      fontSize: 12, color: Color(0xFF828282)),
+                                  maxLines: 1,
+                                  // softWrap: true,
+                                  //   overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                              Text(
+                                'Copy',
+                                style: GoogleFonts.poppins(
+                                  color: const Color(0xFF775594),
+                                  fontSize: _widthScale * 14,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                              SizedBox(width: 5 * _widthScale),
+                              InkWell(
+                                  onTap: () {
+                                    FlutterClipboard.copy(
+                                            profile['buddyid'].toString())
+                                        .then((value) => Fluttertoast.showToast(
+                                            msg: 'copied',
+                                            gravity: ToastGravity.CENTER));
+                                    //.then(( value ) => print('copied'));
+                                  },
+                                  child: Icon(
+                                    Icons.copy_outlined,
+                                    size: 20,
+                                    color: const Color(0xFF775594),
+                                  )),
+                            ],
+                          ),
+                          SizedBox(
+                            height: _heightScale * 10,
+                          ),
+                          field("Your full name", profile['username']),
                           fields("Your Current Occupation",
                               profile['Info']['profession']),
                           fields("Your Work Experience",
@@ -297,7 +370,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       child: Padding(
                                         padding: EdgeInsets.only(left: 16.0),
                                         child: Text(
-                                          profile['skillsets'][index],
+                                          profile['skillsets'][index].toString().trim(),
                                           style: GoogleFonts.poppins(
                                               fontSize: 16,
                                               color: Color(0xFFB6B6B6),
@@ -323,6 +396,55 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Widget fields(String title, String name) {
+    const double kDesignWidth = 375;
+    const double kDesignHeight = 812;
+    double _widthScale = MediaQuery.of(context).size.width / kDesignWidth;
+    double _heightScale = MediaQuery.of(context).size.height / kDesignHeight;
+
+    return Column(
+      children: [
+        // SizedBox(
+        //   height: 30,
+        // ),
+        Row(
+          children: [
+            Text(
+              title,
+              style: GoogleFonts.poppins(
+                textStyle: TextStyle(
+                    color: Color(0xFF828282),
+                    fontSize: _widthScale * 16,
+                    fontWeight: FontWeight.w500),
+              ),
+            ),
+          ],
+        ),
+        SizedBox(
+          height: _heightScale * 5,
+        ),
+        Container(
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(7), color: Colors.white),
+          alignment: Alignment.centerLeft,
+          height: _heightScale * 56,
+          width: _widthScale * 328,
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: _widthScale * 8.0),
+            child: Text(
+              name,
+              style: TextStyle(
+                  fontSize: _widthScale * 16.0, color: Color(0xFFB6B6B6)),
+            ),
+          ),
+        ),
+        SizedBox(
+          height: _heightScale * 15,
+        ),
+      ],
+    );
+  }
+
+  Widget field(String title, String name) {
     const double kDesignWidth = 375;
     const double kDesignHeight = 812;
     double _widthScale = MediaQuery.of(context).size.width / kDesignWidth;

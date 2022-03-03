@@ -8,6 +8,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mybud/screens/message_bio.dart';
 import 'package:mybud/screens/messages.dart';
 import 'package:mybud/widgets/custom_navigation_bar.dart';
 //import 'package:flutter_svg/svg.dart';
@@ -25,12 +26,14 @@ class IndividualPage extends StatefulWidget {
   var userid;
   var buddyid;
   var buddyimage;
+  var ind;
   IndividualPage(
       {Key? key,
       required this.name,
       required this.userid,
       required this.buddyid,
-      required this.buddyimage})
+      required this.buddyimage,
+      required this.ind})
       : super(key: key);
 
   // IndividualPage({Key key, this.chatModel, this.sourchat}) : super(key: key);
@@ -102,7 +105,7 @@ class _IndividualPageState extends State<IndividualPage> {
   }
 
   late StreamController streamController;
-  connect() {
+  connect() async {
     print('userid : ${widget.userid}');
     print('userfriend : ${widget.buddyid}');
     // MessageModel messageModel = MessageModel(sourceId: widget.sourceChat.id.toString(),targetId: );
@@ -111,10 +114,15 @@ class _IndividualPageState extends State<IndividualPage> {
       "transports": ["websocket"],
       "autoConnect": false,
     });
-    socket.connect();
-    socket.emit('updatesocketid', widget.userid);
+      socket.emit('updatesocketid', {"userid":widget.userid,"matcheduser": widget.buddyid});
+  //  socket.
+    // socket.emit('updatesocketid', {"userid":widget.userid,"matcheduser": widget.buddyid});
+   // socket.on(event, (data) => null)
+socket.connect();
     socket.onConnect((data) {
+      //  socket.emit('updatesocketid', {"userid":widget.userid,"matcheduser": widget.buddyid});
       print(" Socket Connected Successfully");
+
       socket.on('privatemessage', (msg) {
         print('msggggggggggg$msg');
         setMessage("destination", msg);
@@ -123,23 +131,26 @@ class _IndividualPageState extends State<IndividualPage> {
       });
       print('tute');
       // streamController = StreamController();
-      socket.on('messages', (msg) {
+      socket.on('getmessage', (msg) {
         print('msgggggggggggtute$msg');
         //  setMessage('source', msg[0]['message']);
+        //  List.generate(msg.length, (inde) {
         List.generate(msg.length, (index) {
           if (msg[index]['sender'] == widget.userid) {
-            print('source');
+            print('sourceeeee');
 
             setMessage("source", msg[index]['message']);
           }
           if (msg[index]['sender'] == widget.buddyid) {
             print('destination');
 
-            setMessage("destination", msg[index]['message']);
+            setMessage(
+                "destination", msg[index]['message']);
           }
           //  _scrollController.animateTo(_scrollController.position.maxScrollExtent,
           // duration: Duration(milliseconds: 300), curve: Curves.easeOut);
         });
+//}).reversed;
         Future.delayed(
             Duration(seconds: 3),
             () => _scrollController.animateTo(
@@ -246,7 +257,13 @@ class _IndividualPageState extends State<IndividualPage> {
                   width: 25,
                 ),
                 InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                MessageBioScreen(id: widget.buddyid)));
+                  },
                   child: Container(
                     margin: EdgeInsets.all(6),
                     child: Column(
@@ -279,7 +296,7 @@ class _IndividualPageState extends State<IndividualPage> {
                   Icons.more_vert_outlined,
                   color: Color(0xFF5E3E79),
                 ),
-              //  color: Color(0xFF5E3E79),
+                //  color: Color(0xFF5E3E79),
                 padding: EdgeInsets.all(0),
                 onSelected: (value) {
                   print(value);
@@ -290,7 +307,6 @@ class _IndividualPageState extends State<IndividualPage> {
                       child: Text("View Buddy"),
                       value: "View Buddy",
                     ),
-                  
                   ];
                 },
               ),

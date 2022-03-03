@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mybud/api_service/get_user_challenges.dart';
+import 'package:mybud/api_service/post_user_attendance.dart';
 import 'package:mybud/screens/active_challenge_bio_screen.dart';
 import 'package:mybud/widgets/chat.dart';
 import 'package:mybud/widgets/data.dart';
@@ -22,6 +24,27 @@ class _ToDoListScreenState extends State<ToDoListScreen> {
     iioo();
   }
 
+  attend(name) async {
+    var atten = await PostAttendance.verify(name, tokenProfile?.token);
+
+    // if (atten['success'] == false) {
+    //   Fluttertoast.showToast(msg: atten['error']);
+    // } else {
+    //   Fluttertoast.showToast(msg: atten['message']);
+    // }
+
+    // setState(() {
+    //   isLO = false;
+    // });
+
+    // Navigator.push(
+    //     context,
+    //     MaterialPageRoute(
+    //         builder: (context) => Nav1(
+    //               ino: 2,
+    //             )));
+  }
+
   var res;
   var x;
   var days;
@@ -30,10 +53,14 @@ class _ToDoListScreenState extends State<ToDoListScreen> {
   List startdates = [];
   List enddates = [];
   List counters = [];
+  List ider = [];
+  List complete = [];
   var startdate;
   var enddate;
   var y;
   var counter;
+  var id;
+  var co;
   iioo() async {
     res = await getUserChallenges(tokenProfile?.token);
 
@@ -52,6 +79,11 @@ class _ToDoListScreenState extends State<ToDoListScreen> {
 
     counters = List.generate(res == null ? 0 : res['data'].length,
         (index) => res['data'][index]['counter']);
+
+    ider = List.generate(res == null ? 0 : res['data'].length,
+        (index) => res['data'][index]['_id']);
+    complete = List.generate(res == null ? 0 : res['data'].length,
+        (index) => res['data'][index]['isCompleted']);
     //  print('list............$x');
     //setState(() {
     items = x;
@@ -59,6 +91,8 @@ class _ToDoListScreenState extends State<ToDoListScreen> {
     startdate = startdates;
     enddate = enddates;
     counter = counters;
+    id = ider;
+    co = complete;
     //  });
     // items =
     //     // x;
@@ -86,8 +120,7 @@ class _ToDoListScreenState extends State<ToDoListScreen> {
               children: [
                 Padding(
                   padding: EdgeInsets.symmetric(
-                      horizontal: 21 * _widthScale,
-                      vertical: 10 * _heightScale),
+                      horizontal: 21 * _widthScale, vertical: 8 * _heightScale),
                   child: Row(
                     children: [
                       Text(
@@ -124,12 +157,15 @@ class _ToDoListScreenState extends State<ToDoListScreen> {
                       final start = startdate[index];
                       final end = enddate[index];
                       final count = counter[index];
+                      final ids = id[index];
+                      final comps = co[index];
 
                       return DismissibleWidget(
                         item: item,
                         child: Column(
                           children: [
-                            buildListTile(item, da, start, end, count),
+                            buildListTile(item, da, start, end, count,
+                                _widthScale, ids, comps),
                           ],
                         ),
                         onDismissed: (direction) =>
@@ -149,23 +185,29 @@ class _ToDoListScreenState extends State<ToDoListScreen> {
     int index,
     DismissDirection direction,
   ) {
-    setState(() {
-      items.removeAt(index);
-    });
-
     switch (direction) {
       case DismissDirection.endToStart:
         Utils.showSnackBar(context, 'Challenge deleted', Color(0xFFEF4C48));
         break;
       case DismissDirection.startToEnd:
+        attend(items[index]);
+        // setState(() {
+        //   iioo();
+        // });
         Utils.showSnackBar(context, 'Challenge Done !', Color(0xFFA585C1));
         break;
       default:
         break;
     }
+    setState(() {
+      items.removeAt(index);
+      iioo();
+    });
   }
 
-  Widget buildListTile(item, dd, starts, ends, counts) => Padding(
+  Widget buildListTile(
+          item, dd, starts, ends, counts, double _width, idd, comp) =>
+      Padding(
         padding: EdgeInsets.symmetric(horizontal: 21, vertical: 5),
         child: Container(
           decoration: BoxDecoration(
@@ -176,7 +218,7 @@ class _ToDoListScreenState extends State<ToDoListScreen> {
           ),
           child: ListTile(
             contentPadding: EdgeInsets.symmetric(
-              horizontal: 10,
+              horizontal: 10 * _width,
               vertical: 3,
             ),
             // leading: CircleAvatar(
@@ -189,14 +231,14 @@ class _ToDoListScreenState extends State<ToDoListScreen> {
                 Text(
                   item,
                   style: GoogleFonts.poppins(
-                      fontSize: 14,
+                      fontSize: 14 * _width,
                       fontWeight: FontWeight.w500,
                       color: Color(0xFF4D4D4D)),
                 ),
                 const SizedBox(height: 10),
                 LinearPercentIndicator(
                   barRadius: Radius.circular(10),
-                  width: 290,
+                  width: 310 * _width,
                   animation: true,
                   lineHeight: 8.0,
                   animationDuration: 1500,
@@ -225,6 +267,8 @@ class _ToDoListScreenState extends State<ToDoListScreen> {
                             startdate: starts,
                             enddate: ends,
                             counts: counts,
+                            id: idd,
+                            comp: comp,
                           )));
             },
           ),

@@ -1,5 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mybud/Local_Notification/local_notification.dart';
+import 'package:mybud/main.dart';
 import 'package:mybud/screens/buddy_main_page.dart';
 import 'package:mybud/screens/notification_screen.dart';
 import 'package:mybud/screens/onboarding.dart';
@@ -97,7 +100,10 @@ class _CustomAppDrawerState extends State<CustomAppDrawer> {
                 // top: 650 * _heightScale
               ),
               child: ElevatedButton(
-                onPressed: () async {},
+                onPressed: () async {
+          
+                  localNotification.testNotification();
+                },
                 style: ElevatedButton.styleFrom(
                   elevation: 0,
                   primary: Colors.white,

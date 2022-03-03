@@ -109,263 +109,260 @@ class _SkillScreenState extends State<SkillScreen> {
     Color col = Color(0xFF775594).withOpacity(0.4);
     return Scaffold(
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                height: _heightScale * 37,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+              height: _heightScale * 37,
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: _widthScale * 18),
+              child: Row(
+                children: [
+                  Container(
+                    height: _heightScale * 5,
+                    width: _widthScale * 246,
+                    color: const Color(0xFF7B2CBF),
+                  ),
+                  Container(
+                    height: _heightScale * 5,
+                    width: _widthScale * 82,
+                    color: const Color(0xFFF3F3F3),
+                  ),
+                ],
               ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: _widthScale * 18),
-                child: Row(
-                  children: [
-                    Container(
-                      height: _heightScale * 5,
-                      width: _widthScale * 246,
-                      color: const Color(0xFF7B2CBF),
-                    ),
-                    Container(
-                      height: _heightScale * 5,
-                      width: _widthScale * 82,
-                      color: const Color(0xFFF3F3F3),
-                    ),
-                  ],
-                ),
+            ),
+            // Text('${widget.players!.length}',         style: GoogleFonts.poppins(
+            //         fontSize: _widthScale * 14,
+            //         fontWeight: FontWeight.w200,
+            //         color: Color(0xFF775594)),),
+            SizedBox(
+              height: _heightScale * 27,
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: _widthScale * 25),
+              child: Text(
+                'Choose your Current Skillset ',
+                style: GoogleFonts.poppins(
+                    fontSize: _widthScale * 28,
+                    fontWeight: FontWeight.w600,
+                    color: Color(0xFF775594)),
               ),
-              // Text('${widget.players!.length}',         style: GoogleFonts.poppins(
-              //         fontSize: _widthScale * 14,
-              //         fontWeight: FontWeight.w200,
-              //         color: Color(0xFF775594)),),
-              SizedBox(
-                height: _heightScale * 27,
+            ),
+            Padding(
+              padding: EdgeInsets.only(right: 23 * _widthScale),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Text(
+                    players!.length == null ? '0 selected' : '${tt} selected',
+                    style: GoogleFonts.poppins(
+                        fontSize: _widthScale * 14,
+                        fontWeight: FontWeight.w400,
+                        color: Color(0xFF775594)),
+                    // textAlign: TextAlign.right
+                  ),
+                ],
               ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: _widthScale * 25),
-                child: Text(
-                  'Choose your Current Skillset ',
-                  style: GoogleFonts.poppins(
-                      fontSize: _widthScale * 28,
-                      fontWeight: FontWeight.w600,
-                      color: Color(0xFF775594)),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(right: 23 * _widthScale),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Text(
-                      players!.length == null ? '0 selected' : '${tt} selected',
-                      style: GoogleFonts.poppins(
-                          fontSize: _widthScale * 14,
-                          fontWeight: FontWeight.w400,
-                          color: Color(0xFF775594)),
-                      // textAlign: TextAlign.right
-                    ),
-                  ],
-                ),
-              ),
+            ),
 
-              SizedBox(
-                height: _heightScale * 29,
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: _widthScale * 24),
-                child: TextField(
-                  controller: _controller,
-                  onChanged: (val) async {
-                    // Future.delayed(Duration(seconds: 5));
-                    setState(() {
-                      print(val);
-                      // getSearch(page, val);
-                      skills(val);
-                      //  Future.delayed(Duration(seconds: 5));
-                      print('t... $res');
-                      print("Name is getting printed$val");
-                    });
-                  },
-                  autofocus: true,
-                  style: TextStyle(
-                      fontSize: _widthScale * 15.0, color: Colors.black),
-                  decoration: InputDecoration(
-                    prefixIcon: Padding(
-                      padding: EdgeInsets.only(
-                          left: _widthScale * 10.0, right: _widthScale * 10),
-                      child: Icon(
-                        Icons.search,
-                        color: Color(0xFFCCCCCC),
-                      ),
+            SizedBox(
+              height: _heightScale * 29,
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: _widthScale * 24),
+              child: TextField(
+                controller: _controller,
+                onChanged: (val) async {
+                  // Future.delayed(Duration(seconds: 5));
+                  setState(() {
+                    print(val);
+                    // getSearch(page, val);
+                    skills(val);
+                    //  Future.delayed(Duration(seconds: 5));
+                    print('t... $res');
+                    print("Name is getting printed$val");
+                  });
+                },
+                autofocus: true,
+                style: TextStyle(
+                    fontSize: _widthScale * 15.0, color: Colors.black),
+                decoration: InputDecoration(
+                  prefixIcon: Padding(
+                    padding: EdgeInsets.only(
+                        left: _widthScale * 10.0, right: _widthScale * 10),
+                    child: Icon(
+                      Icons.search,
+                      color: Color(0xFFCCCCCC),
                     ),
-                    // suffix: Padding(
-                    //   padding: EdgeInsets.only(right: _widthScale * 18.0),
-                    //   child: Image.asset(
-                    //     "assets/filter.png",
-                    //     height: _heightScale * 20,
-                    //     width: _widthScale * 20,
-                    //   ),
-                    // ),
-                    filled: true,
-                    fillColor: Colors.white.withOpacity(0.39),
-                    hintText: 'Search',
-                    hintStyle: GoogleFonts.poppins(
-                      textStyle: TextStyle(
-                          fontSize: _widthScale * 14, color: Color(0xFFCCCCCC)),
-                    ),
-                    contentPadding: EdgeInsets.only(
-                        left: _widthScale * 14.0,
-                        bottom: _widthScale * 8.0,
-                        top: _widthScale * 8.0),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Color(0xFFCCCCCC)),
-                      borderRadius: BorderRadius.circular(_widthScale * 6),
-                    ),
-                    enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Color(0xFFCCCCCC)),
-                      borderRadius: BorderRadius.circular(_widthScale * 6),
-                    ),
+                  ),
+                  // suffix: Padding(
+                  //   padding: EdgeInsets.only(right: _widthScale * 18.0),
+                  //   child: Image.asset(
+                  //     "assets/filter.png",
+                  //     height: _heightScale * 20,
+                  //     width: _widthScale * 20,
+                  //   ),
+                  // ),
+                  filled: true,
+                  fillColor: Colors.white.withOpacity(0.39),
+                  hintText: 'Search',
+                  hintStyle: GoogleFonts.poppins(
+                    textStyle: TextStyle(
+                        fontSize: _widthScale * 14, color: Color(0xFFCCCCCC)),
+                  ),
+                  contentPadding: EdgeInsets.only(
+                      left: _widthScale * 14.0,
+                      bottom: _widthScale * 8.0,
+                      top: _widthScale * 8.0),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Color(0xFFCCCCCC)),
+                    borderRadius: BorderRadius.circular(_widthScale * 6),
+                  ),
+                  enabledBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: Color(0xFFCCCCCC)),
+                    borderRadius: BorderRadius.circular(_widthScale * 6),
                   ),
                 ),
               ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 24 * _widthScale),
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 24 * _widthScale),
+              child:
+                  // res.isEmpty ? CircularProgressIndicator():
+
+                  Container(
+                height: 440 * _heightScale,
+                width: 330 * _widthScale,
                 child:
-                    // res.isEmpty ? CircularProgressIndicator():
 
-                    Container(
-                  height: 440 * _heightScale,
-                  width: 330 * _widthScale,
-                  child:
+                    // res.length == 0 ? CircularProgressIndicator():
+                    FutureBuilder(
+                        future: skills(_controller.text),
+                        builder: (context, snapShot) {
+                          print('coni$_controller');
 
-                      // res.length == 0 ? CircularProgressIndicator():
-                      FutureBuilder(
-                          future: skills(_controller.text),
-                          builder: (context, snapShot) {
-                            print('coni$_controller');
-
-                            return res.isEmpty
-                                ? Container(
-                                    height: 44 * _heightScale,
-                                    width: 330 * _widthScale,
-                                    child: Center(
-                                        child: CircularProgressIndicator(
-
-                                       color:Color(0xFF775594) ,                                          
-                                        )))
-                                : SmartRefresher(
-                                    controller: refreshController,
-                                    enablePullUp: false,
-                                    enablePullDown: false,
-                                    // onRefresh: _onRefresh,
-                                    //   onLoading: () => _onLoading(context),
-                                    child: ListView.builder(
-                                        itemCount: res.length,
-                                        itemBuilder:
-                                            (BuildContext context, index) {
-                                          return PlayerCard(
-                                            profile: res[index],
-                                          );
-                                          // return Padding(
-                                          //   padding: EdgeInsets.symmetric(
-                                          //       horizontal: _widthScale * 24),
-                                          //   child: ElevatedButton(
-                                          //     onPressed: () {
-                                          //       //   select(res);
-                                          //       // Navigator.push(context,
-                                          //       //     MaterialPageRoute(builder: (context) => Verification()));
-                                          //       // setState(() {
-                                          //       //   selects = true;
-                                          //       // });
-                                          //     },
-                                          //     // style: ElevatedButton.styleFrom(
-                                          //     //   primary: selects== true
-                                          //     //       ? BoxColor.PurpleBox(context)
-                                          //     //       : Color(0xFFFFFFFF),
-                                          //     //   shape: RoundedRectangleBorder(
-                                          //     //     borderRadius: BorderRadius.circular(10.0),
-                                          //     //   ),
-                                          //     // ),
-                                          //     child: Container(
-                                          //       height: _heightScale * 56,
-                                          //       width: _widthScale * 328,
-                                          //       alignment: Alignment.center,
-                                          //       child: Text(
-                                          //         res[index],
-                                          //         style: GoogleFonts.poppins(
-                                          //             textStyle: TextStyle(
-                                          //                 fontSize: _widthScale * 18,
-                                          //                 fontWeight: FontWeight.w600,
-                                          //                 color: deta == 'BTech'
-                                          //                     ? Colors.white
-                                          //                     : Color(0xFF775594))),
-                                          //       ),
-                                          //     ),
-                                          //   ),
-                                          // );
-                                          // return box2(
-                                          //     "assets/Ellipse 9.png",
-                                          //     // "Manideep Mittapelli",
-                                          //     res != null ? filterUsers[index]['name'] : "",
-                                          //     "Sr Technical Program Manager",
-                                          //     "assets/Ellipse 182.png",
-                                          //     "University Of HartFort",
-                                          //     "assets/Rectangle 704.png");
-                                        }),
-                                  );
-                          }),
-                ),
+                          return res.isEmpty
+                              ? Container(
+                                  height: 44 * _heightScale,
+                                  width: 330 * _widthScale,
+                                  child: Center(
+                                      child: CircularProgressIndicator(
+                                    color: Color(0xFF775594),
+                                  )))
+                              : SmartRefresher(
+                                  controller: refreshController,
+                                  enablePullUp: false,
+                                  enablePullDown: false,
+                                  // onRefresh: _onRefresh,
+                                  //   onLoading: () => _onLoading(context),
+                                  child: ListView.builder(
+                                      itemCount: res.length,
+                                      itemBuilder:
+                                          (BuildContext context, index) {
+                                        return PlayerCard(
+                                          profile: res[index],
+                                        );
+                                        // return Padding(
+                                        //   padding: EdgeInsets.symmetric(
+                                        //       horizontal: _widthScale * 24),
+                                        //   child: ElevatedButton(
+                                        //     onPressed: () {
+                                        //       //   select(res);
+                                        //       // Navigator.push(context,
+                                        //       //     MaterialPageRoute(builder: (context) => Verification()));
+                                        //       // setState(() {
+                                        //       //   selects = true;
+                                        //       // });
+                                        //     },
+                                        //     // style: ElevatedButton.styleFrom(
+                                        //     //   primary: selects== true
+                                        //     //       ? BoxColor.PurpleBox(context)
+                                        //     //       : Color(0xFFFFFFFF),
+                                        //     //   shape: RoundedRectangleBorder(
+                                        //     //     borderRadius: BorderRadius.circular(10.0),
+                                        //     //   ),
+                                        //     // ),
+                                        //     child: Container(
+                                        //       height: _heightScale * 56,
+                                        //       width: _widthScale * 328,
+                                        //       alignment: Alignment.center,
+                                        //       child: Text(
+                                        //         res[index],
+                                        //         style: GoogleFonts.poppins(
+                                        //             textStyle: TextStyle(
+                                        //                 fontSize: _widthScale * 18,
+                                        //                 fontWeight: FontWeight.w600,
+                                        //                 color: deta == 'BTech'
+                                        //                     ? Colors.white
+                                        //                     : Color(0xFF775594))),
+                                        //       ),
+                                        //     ),
+                                        //   ),
+                                        // );
+                                        // return box2(
+                                        //     "assets/Ellipse 9.png",
+                                        //     // "Manideep Mittapelli",
+                                        //     res != null ? filterUsers[index]['name'] : "",
+                                        //     "Sr Technical Program Manager",
+                                        //     "assets/Ellipse 182.png",
+                                        //     "University Of HartFort",
+                                        //     "assets/Rectangle 704.png");
+                                      }),
+                                );
+                        }),
               ),
-              SizedBox(
-                height: _heightScale * 38,
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: _widthScale * 24),
-                child: ElevatedButton(
-                  onPressed: () {
-                    //  dispose();
-                    _onAdd(context);
-                    if (players!.keys.isEmpty) {
-                      const snackBar = SnackBar(
-                        backgroundColor: Color(0xFFA585C1),
-                        content: Text(
-                          "Choose your Current SkillSet",
-                          style: TextStyle(color: Colors.white),
-                        ),
-                        duration: Duration(milliseconds: 2000),
-                      );
-                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                    } else
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => ObjectiveTwoScreen()));
-                  },
-                  style: ElevatedButton.styleFrom(
-                    primary: BoxColor.PurpleBox(context),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
+            ),
+            // SizedBox(
+            //   height: _heightScale * 38,
+            // ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: _widthScale * 24),
+              child: ElevatedButton(
+                onPressed: () {
+                  //  dispose();
+                  _onAdd(context);
+                  if (players!.keys.isEmpty) {
+                    const snackBar = SnackBar(
+                      backgroundColor: Color(0xFFA585C1),
+                      content: Text(
+                        "Choose your Current SkillSet",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      duration: Duration(milliseconds: 2000),
+                    );
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                  } else
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ObjectiveTwoScreen()));
+                },
+                style: ElevatedButton.styleFrom(
+                  primary: BoxColor.PurpleBox(context),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0),
                   ),
-                  child: Container(
-                    height: _heightScale * 56,
-                    width: _widthScale * 328,
-                    alignment: Alignment.center,
-                    child: Text(
-                      'Next',
-                      style: GoogleFonts.poppins(
-                          textStyle: TextStyle(
-                        fontSize: _widthScale * 18,
-                        fontWeight: FontWeight.w700,
-                      )),
-                    ),
+                ),
+                child: Container(
+                  height: _heightScale * 56,
+                  width: _widthScale * 328,
+                  alignment: Alignment.center,
+                  child: Text(
+                    'Next',
+                    style: GoogleFonts.poppins(
+                        textStyle: TextStyle(
+                      fontSize: _widthScale * 18,
+                      fontWeight: FontWeight.w700,
+                    )),
                   ),
                 ),
               ),
-              SizedBox(
-                height: _heightScale * 18,
-              ),
-            ],
-          ),
+            ),
+            SizedBox(
+              height: _heightScale * 15,
+            ),
+          ],
         ),
       ),
     );

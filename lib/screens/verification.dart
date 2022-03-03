@@ -232,11 +232,13 @@ class _VerificationState extends State<Verification> {
                     fontWeight: FontWeight.w500),
               ),
               //
+              
               SizedBox(
                 height: 32 * _heightScale,
               ),
               ElevatedButton(
                 onPressed: () {
+                  
                   // _onSubmit(context, pin)
                   // Navigator.push(
                   //     context,

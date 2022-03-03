@@ -8,13 +8,14 @@ import 'package:mybud/shared_preferences/token_preferences.dart';
 import 'package:mybud/widgets/token_profile.dart';
 
 class LogIn {
-  static Future signIn(var username, var password) async {
+  static Future signIn(var username, var password , var fcmtoken) async {
     print('LogIn');
     var dio = Dio();
 
     FormData formData = FormData.fromMap({
       'username': username.toString(),
       'password': password.toString(),
+      'fcmtoken' : fcmtoken.toString()
     });
 
     var response = await dio.post(
