@@ -122,7 +122,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         Navigator.of(context).pushNamed(MessageScreen.route);
                       },
                       child: basic(const Color(0xFFFFFFFF), 'Messages',
-                          '2 Unread Messages', 'assets/Group (10).png', 35),
+                          '', 'assets/Group (10).png', 35),
                     ),
                   ],
                 ),

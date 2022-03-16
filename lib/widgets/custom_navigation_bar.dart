@@ -99,17 +99,15 @@ class _Nav1State extends State<Nav1> {
         child: Scaffold(
           backgroundColor: Colors.white,
           //drawer: CustomAppDrawer(),
-          drawer: CustomAppDrawer(),
 
           appBar: _selectedIndex == 2
               ? null
               : AppBar(
-                  // leading:
                   title: Row(
                     children: [
                       Builder(builder: (context) {
                         return InkWell(
-                          onTap: () => Scaffold.of(context).openDrawer(),
+                          onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (_)=> CustomAppDrawer())),
                           child: Image.asset(
                             "assets/Vector (1).png",
                             height: _heightScale * 23,
@@ -238,7 +236,7 @@ class _Nav1State extends State<Nav1> {
             padding: EdgeInsets.symmetric(
                 horizontal: 23 * _widthScale, vertical: 23 * _heightScale),
             child: Container(
-              height: _heightScale * 56,
+              height: _heightScale * 65,
               width: _widthScale * 330,
               // margin: EdgeInsets.only(
               //     left: _widthScale * 15,

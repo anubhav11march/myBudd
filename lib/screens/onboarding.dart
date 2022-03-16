@@ -24,8 +24,7 @@ class _onboardingscreenState extends State<onboardingscreen> {
     print('hbhjb${tokenProfile?.token}');
 
     final double _widthScale = MediaQuery.of(context).size.width / kDesignWidth;
-    final double _heightScale =
-        MediaQuery.of(context).size.height / kDesignHeight;
+    final double _heightScale = MediaQuery.of(context).size.height / kDesignHeight;
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -35,15 +34,13 @@ class _onboardingscreenState extends State<onboardingscreen> {
               SizedBox(
                 height: _heightScale * 36,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image.asset(
-                    "assets/Ellipse 1.png",
-                    // height: 68 * _heightScale,
-                    // width: 68 * _widthScale,
-                  ),
-                ],
+              SizedBox(
+                height: _heightScale * 68,
+                child: Image.asset(
+                  "assets/Ellipse 1.png",
+                  // height: 68 * _heightScale,
+                  // width: 68 * _widthScale,
+                ),
               ),
               SizedBox(
                 height: 10 * _widthScale,
@@ -56,58 +53,31 @@ class _onboardingscreenState extends State<onboardingscreen> {
                     fontSize: _widthScale * 24),
               ),
               SizedBox(
-                height: _heightScale * 113,
+                height: _heightScale * 47,
                 // width: MediaQuery.of(context).size.width * 0.96,
               ),
-              Image.asset(
-                "assets/Group 1 (2).png",
-                // height: _widthScale * 330,
-                // width: _widthScale * 246,
+              SizedBox(
+                height: _heightScale * 288,
+                child: Image.asset(
+                  "assets/img.png",
+                  // height: _widthScale * 330,
+                  // width: _widthScale * 246,
+                ),
               ),
               SizedBox(
-                height: _heightScale * 40,
+                height: _heightScale * 60,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  //  SizedBox(width: _widthScale * 29),
-                  Text('Proceed only if you can spare ',
-                      style: GoogleFonts.poppins(
-                          color: Colors.black,
-                          fontWeight: FontWeight.w400,
-                          fontSize: _widthScale * 15)),
-                  Text('2-3 hours ',
-                      style: GoogleFonts.poppins(
-                          color: Colors.black,
-                          fontWeight: FontWeight.w600,
-                          fontSize: _widthScale * 15)),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  // SizedBox(width: _widthScale * 29),
-                  Text('per week ',
-                      style: GoogleFonts.poppins(
-                          color: Colors.black,
-                          fontWeight: FontWeight.w600,
-                          fontSize: _widthScale * 15)),
-                  Text('towards your self development ',
-                      style: GoogleFonts.poppins(
-                          color: Colors.black,
-                          fontWeight: FontWeight.w400,
-                          fontSize: _widthScale * 15)),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text('as well as development of your buddy ',
-                      style: GoogleFonts.poppins(
-                          color: Colors.black,
-                          fontWeight: FontWeight.w400,
-                          fontSize: _widthScale * 15)),
-                ],
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                child: Text(
+                  "Proceed only if you can spare 2-3 hours per week towards your self development as well as development of your buddy.",
+                  style: GoogleFonts.poppins(
+                      color: Color(0xff767676),
+                      fontWeight: FontWeight.w500,
+                      fontSize: _widthScale * 15,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
               ),
               // SizedBox(
               //   height: _heightScale * 40,

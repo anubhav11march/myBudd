@@ -155,7 +155,7 @@ class _SkillScreenState extends State<SkillScreen> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Text(
-                    players!.length == null ? '0 selected' : '${tt} selected',
+                    players!.length == null ? '0 s qelected' : '${tt} selected',
                     style: GoogleFonts.poppins(
                         fontSize: _widthScale * 14,
                         fontWeight: FontWeight.w400,
