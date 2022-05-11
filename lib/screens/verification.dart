@@ -128,6 +128,12 @@ class _VerificationState extends State<Verification> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              GestureDetector(
+                onTap: () {
+                  Navigator.of(context).pop();
+                },
+                child: Icon(Icons.arrow_back),
+              ),
               SizedBox(
                 height: 31 * _heightScale,
               ),

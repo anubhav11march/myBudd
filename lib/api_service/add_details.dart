@@ -13,7 +13,7 @@ class AddDetails extends ChangeNotifier {
     String ?skills,
   }) async {
     var response = await ApiProvider.post(
-      url: 'https://sheltered-earth-76230.herokuapp.com/user/add/details',
+      url: 'https://mybud.herokuapp.com/user/add/details',
       body: {
         'profession': profession,
         'details': details,
@@ -25,7 +25,7 @@ class AddDetails extends ChangeNotifier {
       token: tokenProfile?.token,
     );
     if (response['status'] == 200) {
-      print('inside adddetails success');
+      print('inside add details success');
 
       // data = response['body']['message'];
       notifyListeners();

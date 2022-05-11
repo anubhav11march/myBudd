@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mybud/Local_Notification/local_notification.dart';
+import 'package:mybud/api_service/get_user_profile.dart';
 import 'package:mybud/main.dart';
 import 'package:mybud/screens/buddy_main_page.dart';
 import 'package:mybud/screens/notification_screen.dart';
@@ -27,6 +28,11 @@ class _CustomAppDrawerState extends State<CustomAppDrawer> {
   bool isSwitch = false;
 
   var val;
+  var profile;
+
+  Future<void> getData() async {
+    profile = await getdetails(tokenProfile?.token);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -91,125 +97,155 @@ class _CustomAppDrawerState extends State<CustomAppDrawer> {
             ],
           ),
           SizedBox(height: _heightScale * 19),
-          Padding(
-            padding: EdgeInsets.only(
-              right: 23 * _widthScale,
-              left: 23 * _widthScale,
-              // top: 650 * _heightScale
-            ),
-            child: ElevatedButton(
-              onPressed: () async {
-
-                localNotification.testNotification();
-              },
-              style: ElevatedButton.styleFrom(
-                elevation: 0,
-                primary: Colors.white,
-                shape: new RoundedRectangleBorder(
-                  borderRadius: new BorderRadius.circular(10.0),
+          FutureBuilder(
+            future: getData(),
+            builder: (context, snapshot) {
+              if(snapshot.connectionState == ConnectionState.waiting)
+                return Expanded(
+                  flex: 4,
+                  child: Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                );
+              return Padding(
+                padding: EdgeInsets.only(
+                  right: 23 * _widthScale,
+                  left: 23 * _widthScale,
+                  // top: 650 * _heightScale
                 ),
-              ),
-              child: Container(
-                alignment: Alignment.centerLeft,
-                height: _heightScale * 56,
-                width: size.width * 0.8,
-                child: Text(
-                  'Buddy Id',
-                  textAlign: TextAlign.start,
-                  style: GoogleFonts.poppins(
-                      textStyle: TextStyle(
-                          color: Color(0xFF464646),
-                          fontSize: 14 * _widthScale,
-                          fontWeight: FontWeight.w500)),
+                child: ElevatedButton(
+                  onPressed: () async {
+                    localNotification.testNotification();
+                  },
+                  style: ElevatedButton.styleFrom(
+                    elevation: 0,
+                    primary: Colors.white,
+                    shape: new RoundedRectangleBorder(
+                      borderRadius: new BorderRadius.circular(10.0),
+                    ),
+                  ),
+                  child: Container(
+                    alignment: Alignment.centerLeft,
+                    height: _heightScale * 56,
+                    width: size.width * 0.8,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Buddy Id:',
+                          textAlign: TextAlign.start,
+                          style: GoogleFonts.poppins(
+                              textStyle: TextStyle(
+                                  color: Color(0xFF464646),
+                                  fontSize: 12 * _widthScale,
+                                  fontWeight: FontWeight.w500)),
+                        ),
+                        Text(
+                          "${profile['buddyid']}",
+                          style: GoogleFonts.poppins(
+                              textStyle: TextStyle(
+                                  color: Color(0xFF464646),
+                                  fontSize: 12 * _widthScale,
+                                  fontWeight: FontWeight.w500)),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
-              ),
-            ),
+              );
+            },
           ),
           SizedBox(height: _heightScale * 9),
-          Padding(
-            padding: EdgeInsets.only(
-              right: 23 * _widthScale,
-              left: 23 * _widthScale,
-              // top: 650 * _heightScale
-            ),
-            child: ElevatedButton(
-              onPressed: () async {
-                Navigator.of(context).pushNamed(NotificationScreen.route);
-              },
-              style: ElevatedButton.styleFrom(
-                elevation: 0,
-                primary: Colors.white,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10.0),
-                ),
-              ),
-              child: Container(
-                alignment: Alignment.centerLeft,
-                height: _heightScale * 56,
-                width: size.width * 0.8,
-                child: Text(
-                  'Notifications',
-                  textAlign: TextAlign.center,
-                  style: GoogleFonts.poppins(
-                      textStyle: TextStyle(
-                          color: Color(0xFF464646),
-                          fontSize: 14 * _widthScale,
-                          fontWeight: FontWeight.w500)),
-                ),
-              ),
-            ),
-          ),
+          // Padding(
+          //   padding: EdgeInsets.only(
+          //     right: 23 * _widthScale,
+          //     left: 23 * _widthScale,
+          //     // top: 650 * _heightScale
+          //   ),
+          //   child: ElevatedButton(
+          //     onPressed: () async {
+          //       Navigator.of(context).pushNamed(NotificationScreen.route);
+          //     },
+          //     style: ElevatedButton.styleFrom(
+          //       elevation: 0,
+          //       primary: Colors.white,
+          //       shape: RoundedRectangleBorder(
+          //         borderRadius: BorderRadius.circular(10.0),
+          //       ),
+          //     ),
+          //     child: Container(
+          //       alignment: Alignment.centerLeft,
+          //       height: _heightScale * 56,
+          //       width: size.width * 0.8,
+          //       child: Text(
+          //         'Notifications',
+          //         textAlign: TextAlign.center,
+          //         style: GoogleFonts.poppins(
+          //             textStyle: TextStyle(
+          //                 color: Color(0xFF464646),
+          //                 fontSize: 14 * _widthScale,
+          //                 fontWeight: FontWeight.w500)),
+          //       ),
+          //     ),
+          //   ),
+          // ),
           // Container(
           //  height: _heightScale*600,
           // ),
-          Padding(
-            padding: EdgeInsets.only(
-              right: 23 * _widthScale,
-              left: 23 * _widthScale,
-              top: 515 * _heightScale,
-            ),
-            child: ElevatedButton(
-              onPressed: () async {
-                //  var rr = await tokenPreference.cleartTokenPreferenceData();
-
-                await loginPreference!.setLoginSta(false);
-                await loginPreference!.setLoginStat(false);
-                await loginPreference!.setLoginStatu(false);
-                await loginPreference!.setLoginStatus(false);
-                tokenProfile = null;
-                await tokenPreference.cleartTokenPreferenceData();
-                // await tokenPreference.setTokenPreferenceData('');
-                //   if (tokenProfile?.token == null) {
-                //  print('[[[[${tokenProfile?.token}');
-                Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => onboardingscreen()),
-                    (route) => false);
-                // }
-                // Navigator.pushReplacement(
-                //     context,
-                //     MaterialPageRoute(
-                //         builder: (context) => onboardingscreen()));
-                //}
-              },
-              style: ElevatedButton.styleFrom(
-                primary: BoxColor.PurpleBox(context),
-                shape: new RoundedRectangleBorder(
-                  borderRadius: new BorderRadius.circular(10.0),
+          Expanded(
+            flex: 1,
+            child: Align(
+              alignment: Alignment.bottomCenter,
+              child: Padding(
+                padding: EdgeInsets.only(
+                  right: 23 * _widthScale,
+                  left: 23 * _widthScale,
+                  bottom: 23 * _widthScale
                 ),
-              ),
-              child: Container(
-                alignment: Alignment.center,
-                height: _heightScale * 56,
-                width: size.width * 0.8,
-                child: Text(
-                  'Log Out',
-                  textAlign: TextAlign.center,
-                  style: GoogleFonts.poppins(
-                      textStyle: TextStyle(
-                          fontSize: 18 * _widthScale,
-                          fontWeight: FontWeight.w700)),
+                child: ElevatedButton(
+                  onPressed: () async {
+                    //  var rr = await tokenPreference.cleartTokenPreferenceData();
+
+                    await loginPreference!.setLoginSta(false);
+                    await loginPreference!.setLoginStat(false);
+                    await loginPreference!.setLoginStatu(false);
+                    await loginPreference!.setLoginStatus(false);
+                    tokenProfile = null;
+                    await tokenPreference.cleartTokenPreferenceData();
+                    // await tokenPreference.setTokenPreferenceData('');
+                    //   if (tokenProfile?.token == null) {
+                    //  print('[[[[${tokenProfile?.token}');
+                    Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => onboardingscreen()),
+                        (route) => false);
+                    // }
+                    // Navigator.pushReplacement(
+                    //     context,
+                    //     MaterialPageRoute(
+                    //         builder: (context) => onboardingscreen()));
+                    //}
+                  },
+                  style: ElevatedButton.styleFrom(
+                    primary: BoxColor.PurpleBox(context),
+                    shape: new RoundedRectangleBorder(
+                      borderRadius: new BorderRadius.circular(10.0),
+                    ),
+                  ),
+                  child: Container(
+                    alignment: Alignment.center,
+                    height: _heightScale * 56,
+                    width: size.width * 0.8,
+                    child: Text(
+                      'Log Out',
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.poppins(
+                          textStyle: TextStyle(
+                              fontSize: 18 * _widthScale,
+                              fontWeight: FontWeight.w700)),
+                    ),
+                  ),
                 ),
               ),
             ),

@@ -28,6 +28,7 @@ class _SavedProfileScreenState extends State<SavedProfileScreen> {
   saved() async {
     cards = await getsavedCards(tokenProfile?.token);
     prof = await getdetails(tokenProfile?.token);
+    return prof;
   }
 
   @override
@@ -100,205 +101,217 @@ class _SavedProfileScreenState extends State<SavedProfileScreen> {
       body: FutureBuilder(
         future: saved(),
         builder: (context, snapshot) {
-          return Padding(
-            padding: EdgeInsets.symmetric(
-                horizontal: 23 * _widthScale, vertical: 10 * _heightScale),
-            child: Container(
-              alignment: Alignment.center,
-              height: 700 * _heightScale,
-              width: 350 * _widthScale,
-              child: cards == null
-                  ? CircularProgressIndicator(color: Color(0xFFA585C1))
-                  : ListView.builder(
-                      itemCount: cards == null ? 0 : cards['data'].length,
-                      itemBuilder: (context, index) {
-                        return Padding(
-                            padding: EdgeInsets.symmetric(
-                                vertical: 8 * _heightScale),
-                            child: Card(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12.0),
-                              ),
-                              elevation: 0,
-                              color: Colors.white,
-                              child: Padding(
-                                padding: EdgeInsets.symmetric(
-                                    vertical: 16.0 * _heightScale),
-                                child: ListTile(
-                                  leading: CircleAvatar(
-                                    radius: 25,
-                                    backgroundColor: Color(0xFFA585C1),
-                                    backgroundImage: NetworkImage(
-                                      cards['data'][index]['result'][0]['image']
-                                          ['location'],
-                                    ),
+          if(!snapshot.hasData){
+            return Center(
+              child: Text(
+                  "No Profiles Saved",
+                style: GoogleFonts.poppins(
+                    color: Color(0xFF263238),
+                    fontSize: 18 * _widthScale,
+                    fontWeight: FontWeight.w400),
+              ),
+            );
+          } else {
+            return Padding(
+              padding: EdgeInsets.symmetric(
+                  horizontal: 23 * _widthScale, vertical: 10 * _heightScale),
+              child: Container(
+                alignment: Alignment.center,
+                height: 700 * _heightScale,
+                width: 350 * _widthScale,
+                child: cards == null
+                    ? CircularProgressIndicator(color: Color(0xFFA585C1))
+                    : ListView.builder(
+                    itemCount: cards == null ? 0 : cards['data'].length,
+                    itemBuilder: (context, index) {
+                      return Padding(
+                          padding: EdgeInsets.symmetric(
+                              vertical: 8 * _heightScale),
+                          child: Card(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12.0),
+                            ),
+                            elevation: 0,
+                            color: Colors.white,
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(
+                                  vertical: 16.0 * _heightScale),
+                              child: ListTile(
+                                leading: CircleAvatar(
+                                  radius: 25,
+                                  backgroundColor: Color(0xFFA585C1),
+                                  backgroundImage: NetworkImage(
+                                    cards['data'][index]['result'][0]['image']
+                                    ['location'],
                                   ),
-                                  title: GestureDetector(
-                                    onTap: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) => ScreenBioThree(
-                                                  image: cards['data'][index]['result']
-                                                      [0]['image']['location'],
-                                                  name: cards['data'][index]
-                                                      ['result'][0]['username'],
-                                                  profession: cards['data']
-                                                          [index]['result'][0]
-                                                      ['Info']['profession'],
-                                                  details: cards['data'][index]['result']
-                                                      [0]['Info']['details'],
-                                                  location: cards['data'][index]
-                                                      ['result'][0]['location'],
-                                                  objective: cards['data'][index]['result'][0]['objective']['title'],
-                                                  skills: cards['data'][index]['result'][0]['skillsets'],
-                                                     swipedby: prof['_id'],
-                                            swipedon: cards['data'][index]
-                                                ['result'][0]['_id'],
-                                                  )));
+                                ),
+                                title: GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => ScreenBioThree(
+                                              image: cards['data'][index]['result']
+                                              [0]['image']['location'],
+                                              name: cards['data'][index]
+                                              ['result'][0]['username'],
+                                              profession: cards['data']
+                                              [index]['result'][0]
+                                              ['Info']['profession'],
+                                              details: cards['data'][index]['result']
+                                              [0]['Info']['details'],
+                                              location: cards['data'][index]
+                                              ['result'][0]['location'],
+                                              objective: cards['data'][index]['result'][0]['objective']['title'],
+                                              skills: cards['data'][index]['result'][0]['skillsets'],
+                                              swipedby: prof['_id'],
+                                              swipedon: cards['data'][index]
+                                              ['result'][0]['_id'],
+                                            )));
+                                  },
+                                  child: Column(
+                                    mainAxisAlignment:
+                                    MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                    CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        cards['data'][index]['result'][0]
+                                        ['username'],
+                                        style: GoogleFonts.poppins(
+                                            color: Color(0xFF5E3E79),
+                                            fontSize: 18 * _widthScale,
+                                            fontWeight: FontWeight.w600),
+                                      ),
+                                      Text(
+                                        cards['data'][index]['result'][0]
+                                        ['Info']['profession'],
+                                        style: GoogleFonts.poppins(
+                                            color: Color(0xFF263238),
+                                            fontSize: 10 * _widthScale,
+                                            fontWeight: FontWeight.w400),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                trailing: Container(
+                                  width: 60 * _widthScale,
+                                  child: GestureDetector(
+                                    onTap: () async {
+                                      await swipeprov.addDetails(
+                                          swipedby: prof['_id'],
+                                          swipedon: cards['data'][index]
+                                          ['result'][0]['_id'],
+                                          status: '2');
+                                      Fluttertoast.showToast(
+                                          msg: 'Profile deleted !');
                                     },
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                    child: Row(
                                       children: [
                                         Text(
-                                          cards['data'][index]['result'][0]
-                                              ['username'],
+                                          'Delete',
                                           style: GoogleFonts.poppins(
-                                              color: Color(0xFF5E3E79),
-                                              fontSize: 18 * _widthScale,
-                                              fontWeight: FontWeight.w600),
-                                        ),
-                                        Text(
-                                          cards['data'][index]['result'][0]
-                                              ['Info']['profession'],
-                                          style: GoogleFonts.poppins(
-                                              color: Color(0xFF263238),
-                                              fontSize: 10 * _widthScale,
+                                              color: Color(0xFFEF4C48),
+                                              fontSize: 12 * _widthScale,
                                               fontWeight: FontWeight.w400),
                                         ),
+                                        SizedBox(
+                                          width: 3 * _widthScale,
+                                        ),
+                                        Icon(Icons.delete,
+                                            size: 15,
+                                            color: Color(0xFFEF4C48))
                                       ],
-                                    ),
-                                  ),
-                                  trailing: Container(
-                                    width: 60 * _widthScale,
-                                    child: GestureDetector(
-                                      onTap: () async {
-                                        await swipeprov.addDetails(
-                                            swipedby: prof['_id'],
-                                            swipedon: cards['data'][index]
-                                                ['result'][0]['_id'],
-                                            status: '2');
-                                        Fluttertoast.showToast(
-                                            msg: 'Profile deleted !');
-                                      },
-                                      child: Row(
-                                        children: [
-                                          Text(
-                                            'Delete',
-                                            style: GoogleFonts.poppins(
-                                                color: Color(0xFFEF4C48),
-                                                fontSize: 12 * _widthScale,
-                                                fontWeight: FontWeight.w400),
-                                          ),
-                                          SizedBox(
-                                            width: 3 * _widthScale,
-                                          ),
-                                          Icon(Icons.delete,
-                                              size: 15,
-                                              color: Color(0xFFEF4C48))
-                                        ],
-                                      ),
                                     ),
                                   ),
                                 ),
                               ),
-                            )
+                            ),
+                          )
 
-                            //  Container(
-                            //   decoration: BoxDecoration(
-                            //       borderRadius: BorderRadius.circular(8),
-                            //       color: Colors.white),
-                            //   height: 88 * _heightScale,
-                            //   width: 328 * _widthScale,
-                            //   child: Row(
-                            //     children: [
-                            //       Padding(
-                            //         padding: EdgeInsets.symmetric(
-                            //             horizontal: 9, vertical: 17),
-                            //         child: CircleAvatar(
-                            //           radius: 25,
-                            //           backgroundColor: Color(0xFFA585C1),
-                            //           backgroundImage: NetworkImage(
-                            //             cards['data'][index]['result'][0]['image']
-                            //                 ['location'],
-                            //           ),
-                            //         ),
-                            //       ),
-                            //       Padding(
-                            //         padding: EdgeInsets.symmetric(vertical: 17),
-                            //         child: Column(
-                            //           mainAxisAlignment: MainAxisAlignment.center,
-                            //           crossAxisAlignment:
-                            //               CrossAxisAlignment.start,
-                            //           children: [
-                            //             Text(
-                            //               cards['data'][index]['result'][0]
-                            //                   ['username'],
-                            //               style: GoogleFonts.poppins(
-                            //                   color: Color(0xFF5E3E79),
-                            //                   fontSize: 18 * _widthScale,
-                            //                   fontWeight: FontWeight.w600),
-                            //             ),
-                            //             GestureDetector(
-                            //               onTap: () async {
-                            //                 await swipeprov.addDetails(
-                            //                     swipedby: prof['_id'],
-                            //                     swipedon:  cards['data'][index]['result'][0]
-                            //                   ['_id'],
-                            //                     status: '2');
-                            //               },
-                            //               child: Row(
-                            //                 children: [
-                            //                   Text(
-                            //                     cards['data'][index]['result'][0]
-                            //                         ['Info']['profession'],
-                            //                     style: GoogleFonts.poppins(
-                            //                         color: Color(0xFF263238),
-                            //                         fontSize: 10 * _widthScale,
-                            //                         fontWeight: FontWeight.w400),
-                            //                   ),
-                            //                   SizedBox(
-                            //                     width: 145 * _widthScale,
-                            //                   ),
-                            //                   Text(
-                            //                     'Delete',
-                            //                     style: GoogleFonts.poppins(
-                            //                         color: Color(0xFFEF4C48),
-                            //                         fontSize: 12 * _widthScale,
-                            //                         fontWeight: FontWeight.w400),
-                            //                   ),
-                            //                   SizedBox(
-                            //                     width: 3 * _widthScale,
-                            //                   ),
-                            //                   Icon(Icons.delete,
-                            //                       size: 15,
-                            //                       color: Color(0xFFEF4C48))
-                            //                 ],
-                            //               ),
-                            //             ),
-                            //           ],
-                            //         ),
-                            //       ),
-                            //     ],
-                            //   ),
-                            // ),
-                            );
-                      }),
-            ),
-          );
+                        //  Container(
+                        //   decoration: BoxDecoration(
+                        //       borderRadius: BorderRadius.circular(8),
+                        //       color: Colors.white),
+                        //   height: 88 * _heightScale,
+                        //   width: 328 * _widthScale,
+                        //   child: Row(
+                        //     children: [
+                        //       Padding(
+                        //         padding: EdgeInsets.symmetric(
+                        //             horizontal: 9, vertical: 17),
+                        //         child: CircleAvatar(
+                        //           radius: 25,
+                        //           backgroundColor: Color(0xFFA585C1),
+                        //           backgroundImage: NetworkImage(
+                        //             cards['data'][index]['result'][0]['image']
+                        //                 ['location'],
+                        //           ),
+                        //         ),
+                        //       ),
+                        //       Padding(
+                        //         padding: EdgeInsets.symmetric(vertical: 17),
+                        //         child: Column(
+                        //           mainAxisAlignment: MainAxisAlignment.center,
+                        //           crossAxisAlignment:
+                        //               CrossAxisAlignment.start,
+                        //           children: [
+                        //             Text(
+                        //               cards['data'][index]['result'][0]
+                        //                   ['username'],
+                        //               style: GoogleFonts.poppins(
+                        //                   color: Color(0xFF5E3E79),
+                        //                   fontSize: 18 * _widthScale,
+                        //                   fontWeight: FontWeight.w600),
+                        //             ),
+                        //             GestureDetector(
+                        //               onTap: () async {
+                        //                 await swipeprov.addDetails(
+                        //                     swipedby: prof['_id'],
+                        //                     swipedon:  cards['data'][index]['result'][0]
+                        //                   ['_id'],
+                        //                     status: '2');
+                        //               },
+                        //               child: Row(
+                        //                 children: [
+                        //                   Text(
+                        //                     cards['data'][index]['result'][0]
+                        //                         ['Info']['profession'],
+                        //                     style: GoogleFonts.poppins(
+                        //                         color: Color(0xFF263238),
+                        //                         fontSize: 10 * _widthScale,
+                        //                         fontWeight: FontWeight.w400),
+                        //                   ),
+                        //                   SizedBox(
+                        //                     width: 145 * _widthScale,
+                        //                   ),
+                        //                   Text(
+                        //                     'Delete',
+                        //                     style: GoogleFonts.poppins(
+                        //                         color: Color(0xFFEF4C48),
+                        //                         fontSize: 12 * _widthScale,
+                        //                         fontWeight: FontWeight.w400),
+                        //                   ),
+                        //                   SizedBox(
+                        //                     width: 3 * _widthScale,
+                        //                   ),
+                        //                   Icon(Icons.delete,
+                        //                       size: 15,
+                        //                       color: Color(0xFFEF4C48))
+                        //                 ],
+                        //               ),
+                        //             ),
+                        //           ],
+                        //         ),
+                        //       ),
+                        //     ],
+                        //   ),
+                        // ),
+                      );
+                    }),
+              ),
+            );
+          }
         },
       ),
     );

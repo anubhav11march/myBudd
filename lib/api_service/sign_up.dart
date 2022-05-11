@@ -25,7 +25,7 @@ class SignUp {
     //     Uri.parse('https://sheltered-earth-76230.herokuapp.com/user/signup');
 
     var response = await dio.post(
-      'https://sheltered-earth-76230.herokuapp.com/user/signup',
+      'https://mybud.herokuapp.com/user/signup',
       data: formData,
       options: Options(
         followRedirects: false,

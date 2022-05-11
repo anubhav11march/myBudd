@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mybud/api_service/get_cards.dart';
+import 'package:mybud/api_service/update.dart';
+import 'package:mybud/main.dart';
 import 'package:mybud/providers/card_provider.dart';
 import 'package:mybud/screens/buddy_main_page.dart';
 import 'package:mybud/screens/buddy_match_screen.dart';
@@ -179,7 +181,7 @@ class _Nav1State extends State<Nav1> {
                       // SizedBox(width: 50 * _widthScale),
                       InkWell(
                         onTap: () {
-                                                    //  Navigator.of(context).pushNamed(NotificationScreen.route);
+                          Navigator.of(context).pushNamed(NotificationScreen.route);
                         },
                         child: Image.asset(
                           "assets/Vector (5).png",

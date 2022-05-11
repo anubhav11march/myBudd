@@ -14,7 +14,7 @@ class AddEmail {
     });
 
     var response = await dio.post(
-      'https://sheltered-earth-76230.herokuapp.com/user/forgotpassword',
+      'https://mybud.herokuapp.com/user/forgotpassword',
       data: formData,
       options: Options(
         followRedirects: false,

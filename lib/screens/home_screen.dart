@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mybud/api_service/get_all_tasks.dart';
 import 'package:mybud/api_service/get_savedcards.dart';
+import 'package:mybud/api_service/update.dart';
+import 'package:mybud/main.dart';
 import 'package:mybud/screens/buddy_main_page.dart';
 import 'package:mybud/screens/messages.dart';
 import 'package:mybud/screens/profile.dart';
@@ -19,7 +21,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   var cards;
-   var tasks;
+  var tasks;
   saved() async {
     cards = await getsavedCards(tokenProfile?.token);
      tasks = await gettasks(tokenProfile?.token);
@@ -58,18 +60,19 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     GestureDetector(
                       onTap: () {
+                        // Navigator.of(context).pushNamed('/tasks_screen');
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => TaskScreen()));
+                                builder: (_) => TaskScreen()));
                       },
-                      child: basic(Color(0xFFFFFFFF), 'Tasks',
-                       tasks == null ? '0 Tasks':
+                      child: basic(Color(0xFFFFFFFF), 'Goals',
+                       tasks == null ? '0 Goals':
                        tasks['success'] == false
-                      ? 'No task added'
+                      ? 'No Goals added'
                       : tasks['data'][0]['tasks1'] == null
-                          ? '0 Task'
-                          :   '${tasks['data'][0]['tasks1'].length} Tasks',
+                          ? '0 Goals'
+                          :   '${tasks['data'][0]['tasks1'].length} Goals',
                           'assets/Vector (9).png', 110),
                     ),
                     SizedBox(

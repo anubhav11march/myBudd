@@ -39,7 +39,7 @@ import 'package:mybud/widgets/token_profile.dart';
 Future getdummy(page, token) async {
   http.Response res = await http.get(
     Uri.parse(
-        'https://sheltered-earth-76230.herokuapp.com/card/getcards?page=$page'),
+        'https://mybud.herokuapp.com/card/getcards?page=$page'),
     headers: {'Authorization': "Bearer " + token
    // 'eyJhbGciOiJIUzI1NiJ9.IjYxYjVmZTllMDY2ZjNhOWJmYjc0ODFiMiI.1BrDUIYNTertbV74L05Zc-6UC6p0WqLkIXBA1Outxac'
     // token
@@ -51,7 +51,7 @@ Future getdummy(page, token) async {
     print("resdata.............");
     print('mmm$share2');
     print('mopopo$share1');
-    print(res);
+    print(res.body);
     return share1;
   } else if (res.statusCode == 400) {
     print('hjvhjvjh');

@@ -8,7 +8,7 @@ import 'package:mybud/widgets/token_profile.dart';
 //var tokens = tokenProfile?.token;
 Future getDelete(token, name) async {
   http.Response res = await http.get(
-    Uri.parse('https://sheltered-earth-76230.herokuapp.com/challenge/deletechallenge?challengeid=$name'),
+    Uri.parse('https://mybud.herokuapp.com/challenge/deletechallenge?challengeid=$name'),
     headers: {'Authorization': "Bearer " + token
      },
   );

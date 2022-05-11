@@ -17,7 +17,7 @@ class Otp {
     });
 
     var response = await dio.post(
-      'https://sheltered-earth-76230.herokuapp.com/user/verifyemail',
+      'https://mybud.herokuapp.com/user/verifyemail',
       data: formData,
       options: Options(
         followRedirects: false,

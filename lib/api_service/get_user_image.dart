@@ -9,7 +9,7 @@ import 'package:mybud/widgets/token_profile.dart';
 //var tokens = tokenProfile?.token;
 Future getUserImage(token) async {
   http.Response res = await http.get(
-    Uri.parse('https://sheltered-earth-76230.herokuapp.com/user/get/image'),
+    Uri.parse('https://mybud.herokuapp.com/user/get/image'),
     headers: {'Authorization': "Bearer " + token
      },
   );

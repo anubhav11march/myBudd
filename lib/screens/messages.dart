@@ -62,7 +62,7 @@ class _MessageScreenState extends State<MessageScreen>
   connect() async {
     //   await userid();
     socket =
-        IO.io("https://sheltered-earth-76230.herokuapp.com", <String, dynamic>{
+        IO.io("https://mybud.herokuapp.com", <String, dynamic>{
       "transports": ["websocket"],
       "autoConnect": false,
     });
@@ -201,7 +201,7 @@ class _MessageScreenState extends State<MessageScreen>
                               Row(
                                 children: [
                                   Text(
-                                    " If the receiver dosen’t reply in 24hrs the chat will disappear",
+                                    " Currently you do not have a buddy assigned, Go to ""Find A Buddy"" and look for a friend.",
                                     style: GoogleFonts.poppins(
                                       color: const Color(0xFF5E3E79),
                                       fontSize: _widthScale * 10,
@@ -367,14 +367,14 @@ class _MessageScreenState extends State<MessageScreen>
                             ),
                           ],
                         ),
-                        Text(
-                          " Lorem ipsum dolor sit amet, consectetur.r",
-                          style: GoogleFonts.poppins(
-                            color: const Color(0xFF263238),
-                            fontSize: _widthScale * 10,
-                            fontWeight: FontWeight.w400,
-                          ),
-                        ),
+                        // Text(
+                        //   " Lorem ipsum dolor sit amet, consectetur.r",
+                        //   style: GoogleFonts.poppins(
+                        //     color: const Color(0xFF263238),
+                        //     fontSize: _widthScale * 10,
+                        //     fontWeight: FontWeight.w400,
+                        //   ),
+                        // ),
                       ],
                     )
                   ],

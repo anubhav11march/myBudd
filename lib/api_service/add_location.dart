@@ -14,7 +14,7 @@ class AddLocation {
     });
 
     var response = await dio.post(
-      'https://sheltered-earth-76230.herokuapp.com/user/add/location',
+      'https://mybud.herokuapp.com/user/add/location',
       data: formData,
       options: Options(
         followRedirects: false,

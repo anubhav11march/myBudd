@@ -105,7 +105,8 @@ class _SearchBuddyScreenState extends State<SearchBuddyScreen> {
   var sendinvite;
 
   invites(buddy) async {
-    sendinvite = await SendInvite.verify(buddy, tokenProfile?.token);
+    sendinvite = await SendInvite.verify(buddy, tokenProfile!.token);
+    print(sendinvite);
   }
 
   Timer? timer;
@@ -200,7 +201,7 @@ class _SearchBuddyScreenState extends State<SearchBuddyScreen> {
                       FutureBuilder(
                           future: skills(_controller.text),
                           builder: (context, snapShot) {
-                            print('coni$_controller');
+                            print('coni ${_controller.text}');
 
                             return res == null
                                 ? Container(
@@ -232,7 +233,7 @@ class _SearchBuddyScreenState extends State<SearchBuddyScreen> {
                                                               ' please search your Buddy Id'),
                                                         ],
                                                       )
-                                                    : Text(res['error'])))
+                                                    : Text("error: " + res['error'])))
                                         : Container(
                                             height: 44 * _heightScale,
                                             width: 330 * _widthScale,
@@ -463,10 +464,7 @@ class _SearchBuddyScreenState extends State<SearchBuddyScreen> {
                                                                     )),
                                                                     onPressed:
                                                                         () async {
-                                                                      await invites(
-                                                                          res['data']
-                                                                              [
-                                                                              'buddyid']);
+                                                                      await invites(res['data']['buddyid']);
                                                                       if (sendinvite[
                                                                               'message'] ==
                                                                           "Invite Sent!") {

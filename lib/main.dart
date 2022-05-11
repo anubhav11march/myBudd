@@ -6,6 +6,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mybud/api_service/add_details.dart';
 import 'package:mybud/api_service/swipe_cards.dart';
+import 'package:mybud/api_service/update.dart';
 import 'package:mybud/api_service/upload_image.dart';
 import 'package:mybud/providers/add_detailss.dart';
 //import 'package:mybud/providers/cardProvider.dart';
@@ -162,14 +163,18 @@ class _MyAppState extends State<MyApp> {
     print('loginPreference in initState');
     loginPreference = LoginPreference();
     tokenPreference = TokenPreference();
-
+    update();
     getUserData();
+  }
+
+  update () async {
+    var token = await firebaseMessaging.getToken();
+    Updates().token(fcmtoken: token, token: tokenProfile!.token);
   }
 
   void getUserData() async {
     if (await loginPreference!.getLoginStatus()) {
-      tokenProfile =
-          TokenProfile.fromJson(await tokenPreference.getTokenPreferenceData());
+      tokenProfile = TokenProfile.fromJson(await tokenPreference.getTokenPreferenceData());
       print("User Data");
       //  print(constant.api);
     }
@@ -219,6 +224,7 @@ class _MyAppState extends State<MyApp> {
             builder: (context, snapShot) {
               if (!snapShot.hasData) {
                 return MaterialApp(
+                    title: "mybud",
                     debugShowCheckedModeBanner: false,
                     home: Scaffold(
                       body: Center(
@@ -238,7 +244,7 @@ class _MyAppState extends State<MyApp> {
                 print(snapShot.data);
                 return MaterialApp(
                   debugShowCheckedModeBanner: false,
-                  title: 'Flutter Demo',
+                  title: 'mybud',
                   theme: ThemeData(
                     primarySwatch: Colors.blue,
                   ),

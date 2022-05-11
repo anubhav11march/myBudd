@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:mybud/api_service/sign_up.dart';
 import 'package:mybud/screens/sign_in.dart';
 import 'package:mybud/screens/verification.dart';
@@ -449,14 +450,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   //   onSaved: (var val) => email = val,
                 ),
                 SizedBox(height: 28 * _heightScale),
-                TextFormField(
-                  cursorColor: Color(0xFF775594),
-                  autofocus: false,
-                  controller: _phoneno,
-                  keyboardType: TextInputType.number,
-                  style: TextStyle(
+                InternationalPhoneNumberInput(
+                  selectorConfig: SelectorConfig(
+                    showFlags: false,
+                    useEmoji: false,
+                    selectorType: PhoneInputSelectorType.DIALOG,
+                    setSelectorButtonAsPrefixIcon: true,
+                  ),
+                  selectorTextStyle: TextStyle(
                       fontSize: 15.0 * _heightScale, color: Colors.black),
-                  decoration: InputDecoration(
+                  spaceBetweenSelectorAndTextField: 0 * _widthScale,
+                  initialValue: PhoneNumber(isoCode: "IN"),
+                  inputDecoration: InputDecoration(
                     filled: true,
                     fillColor: Colors.white,
                     hintText: 'Enter Phone Number',
@@ -486,8 +491,25 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     //   borderRadius: BorderRadius.circular(6),
                     // ),
                   ),
-                  // onSaved: (var val) => phoneno = val,
+                  autoFocus: false,
+                  maxLength: 12,
+                  cursorColor: Color(0xFF775594),
+                  textStyle: TextStyle(
+                      fontSize: 15.0 * _heightScale, color: Colors.black),
+                  onInputChanged: (PhoneNumber) {
+                    print("${PhoneNumber.phoneNumber!}");
+                    _phoneno.text = "${PhoneNumber.phoneNumber!}";
+                  },
                 ),
+                // TextFormField(
+                //   cursorColor: Color(0xFF775594),
+                //   autofocus: false,
+                //   controller: _phoneno,
+                //   keyboardType: TextInputType.number,
+
+                //   decoration:
+                //   // onSaved: (var val) => phoneno = val,
+                // ),
                 SizedBox(height: 28 * _heightScale),
                 TextFormField(
                   cursorColor: Color(0xFF775594),

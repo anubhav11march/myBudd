@@ -7,7 +7,7 @@ import 'package:mybud/widgets/token_profile.dart';
 //var tokens = tokenProfile?.token;
 Future gettasks(token) async {
   http.Response res = await http.get(
-    Uri.parse('https://sheltered-earth-76230.herokuapp.com/task/gettasks'),
+    Uri.parse('https://mybud.herokuapp.com/task/gettasks'),
     headers: {'Authorization': "Bearer " + token},
   );
   var share1 = json.decode(res.body);

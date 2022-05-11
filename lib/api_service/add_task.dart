@@ -14,7 +14,7 @@ class AddTask {
     });
 
     var response = await dio.post(
-      'https://sheltered-earth-76230.herokuapp.com/task/createtask',
+      'https://mybud.herokuapp.com/task/createtask',
       data: formData,
       options: Options(
         followRedirects: false,

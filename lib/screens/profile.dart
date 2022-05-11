@@ -224,10 +224,10 @@ class _ProfileScreenState extends State<ProfileScreen>
                             ],
                           ),
                           SizedBox(
-                            height: _heightScale * 10,
+                            height: _heightScale * 15,
                           ),
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.end,
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               // SizedBox(width: 10 * _widthScale),
                               Text(
@@ -237,40 +237,42 @@ class _ProfileScreenState extends State<ProfileScreen>
                                   fontSize: 14,
                                 ),
                               ),
-                              Container(
-                                width: 180 * _widthScale,
-                                child: Text(
-                                  ' ${profile['buddyid']}',
-                                  style: GoogleFonts.poppins(
-                                      fontSize: 12, color: Color(0xFF828282)),
-                                  maxLines: 1,
-                                  // softWrap: true,
-                                  //   overflow: TextOverflow.ellipsis,
-                                ),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Container(
+                                      child: Text(
+                                        ' ${profile['buddyid']}',
+                                        style: GoogleFonts.poppins(
+                                            fontSize: 12, color: Color(0xFF828282)),
+                                        // softWrap: true,
+                                      ),
+                                    ),
+                                  ),
+                                  // Text(
+                                  //   'Copy',
+                                  //   style: GoogleFonts.poppins(
+                                  //     color: const Color(0xFF775594),
+                                  //     fontSize: _widthScale * 14,
+                                  //     fontWeight: FontWeight.w500,
+                                  //   ),
+                                  // ),
+                                  GestureDetector(
+                                      onTap: () {
+                                        FlutterClipboard.copy(
+                                                profile['buddyid'].toString())
+                                            .then((value) => Fluttertoast.showToast(
+                                                msg: 'Buddy ID Copied!',
+                                                gravity: ToastGravity.BOTTOM));
+                                        //.then(( value ) => print('copied'));
+                                      },
+                                      child: Icon(
+                                        Icons.copy_outlined,
+                                        size: 12,
+                                        color: const Color(0xFF775594),
+                                      )),
+                                ],
                               ),
-                              Text(
-                                'Copy',
-                                style: GoogleFonts.poppins(
-                                  color: const Color(0xFF775594),
-                                  fontSize: _widthScale * 14,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                              SizedBox(width: 5 * _widthScale),
-                              InkWell(
-                                  onTap: () {
-                                    FlutterClipboard.copy(
-                                            profile['buddyid'].toString())
-                                        .then((value) => Fluttertoast.showToast(
-                                            msg: 'copied',
-                                            gravity: ToastGravity.CENTER));
-                                    //.then(( value ) => print('copied'));
-                                  },
-                                  child: Icon(
-                                    Icons.copy_outlined,
-                                    size: 20,
-                                    color: const Color(0xFF775594),
-                                  )),
                             ],
                           ),
                           SizedBox(
@@ -279,7 +281,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                           field("Your full name", profile['username']),
                           fields("Your Current Occupation",
                               profile['Info']['profession']),
-                          fields("Your Work Experience",
+                          fields(profile['Info']['profession'] != "Student" ? "Your Work Experience" : "Course",
                               profile['Info']['details']),
                           fields("Your Reason", profile['objective']['title']),
                           Container(

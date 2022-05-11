@@ -4,7 +4,7 @@
 // import 'package:chatapp/CustomUI/ReplyCard.dart';
 // import 'package:chatapp/Model/ChatModel.dart';
 // import 'package:chatapp/Model/MessageModel.dart';
-// import 'package:emoji_picker/emoji_picker.dart';
+import 'package:emoji_choose/emoji_choose.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -110,7 +110,7 @@ class _IndividualPageState extends State<IndividualPage> {
     print('userfriend : ${widget.buddyid}');
     // MessageModel messageModel = MessageModel(sourceId: widget.sourceChat.id.toString(),targetId: );
     socket =
-        IO.io("https://sheltered-earth-76230.herokuapp.com", <String, dynamic>{
+        IO.io("https://mybud.herokuapp.com", <String, dynamic>{
       "transports": ["websocket"],
       "autoConnect": false,
     });
@@ -127,7 +127,7 @@ socket.connect();
         print('msggggggggggg$msg');
         setMessage("destination", msg);
         _scrollController.animateTo(_scrollController.position.maxScrollExtent,
-            duration: Duration(milliseconds: 300), curve: Curves.easeOut);
+            duration: const Duration(milliseconds: 300), curve: Curves.easeOut);
       });
       print('tute');
       // streamController = StreamController();
@@ -152,10 +152,10 @@ socket.connect();
         });
 //}).reversed;
         Future.delayed(
-            Duration(seconds: 3),
+            const Duration(seconds: 3),
             () => _scrollController.animateTo(
                 _scrollController.position.maxScrollExtent,
-                duration: Duration(milliseconds: 300),
+                duration: const Duration(milliseconds: 300),
                 curve: Curves.easeOut));
 
         _scrollController.position.maxScrollExtent;
@@ -210,7 +210,7 @@ socket.connect();
                     Icon(
                       Icons.arrow_back,
                       size: 35 * _heightScale,
-                      color: Color(0xFF775594),
+                      color: const Color(0xFF775594),
                     ),
                   ],
                 ),
@@ -237,10 +237,10 @@ socket.connect();
                         });
                   },
                   child: Padding(
-                    padding: EdgeInsets.only(top: 18.0, bottom: 20),
+                    padding: const EdgeInsets.only(top: 18.0, bottom: 20),
                     child: CircleAvatar(
                       foregroundColor: Colors.white,
-                      backgroundColor: Color(0xFFB9B9B9),
+                      backgroundColor: const Color(0xFFB9B9B9),
                       radius: 25 * _widthScale,
 
                       backgroundImage:
@@ -253,7 +253,7 @@ socket.connect();
                     ),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 25,
                 ),
                 InkWell(
@@ -265,7 +265,7 @@ socket.connect();
                                 MessageBioScreen(id: widget.buddyid)));
                   },
                   child: Container(
-                    margin: EdgeInsets.all(6),
+                    margin: const EdgeInsets.all(6),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -274,7 +274,7 @@ socket.connect();
                             style: GoogleFonts.poppins(
                               fontSize: 18 * _widthScale,
                               fontWeight: FontWeight.w600,
-                              color: Color(0xFF5E3E79),
+                              color: const Color(0xFF5E3E79),
                             )),
                         // Text(
                         //   "last seen today at 12:05",
@@ -292,18 +292,18 @@ socket.connect();
               // IconButton(icon: Icon(Icons.videocam), onPressed: () {}),
               // IconButton(icon: Icon(Icons.call), onPressed: () {}),
               PopupMenuButton<String>(
-                icon: Icon(
+                icon: const Icon(
                   Icons.more_vert_outlined,
                   color: Color(0xFF5E3E79),
                 ),
                 //  color: Color(0xFF5E3E79),
-                padding: EdgeInsets.all(0),
+                padding: const EdgeInsets.all(0),
                 onSelected: (value) {
                   print(value);
                 },
                 itemBuilder: (BuildContext contesxt) {
                   return [
-                    PopupMenuItem(
+                    const PopupMenuItem(
                       child: Text("View Buddy"),
                       value: "View Buddy",
                     ),
@@ -313,7 +313,7 @@ socket.connect();
             ],
           ),
           body: Container(
-            color: Color(0xFFE5E5E5),
+            color: const Color(0xFFE5E5E5),
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
             child: WillPopScope(
@@ -357,7 +357,7 @@ socket.connect();
                               Container(
                                 width: MediaQuery.of(context).size.width - 60,
                                 child: Card(
-                                  margin: EdgeInsets.only(
+                                  margin: const EdgeInsets.only(
                                       left: 2, right: 2, bottom: 8),
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(25),
@@ -381,25 +381,31 @@ socket.connect();
                                       }
                                     },
                                     decoration: InputDecoration(
-                                      border: InputBorder.none,
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(25),
+                                        borderSide: BorderSide.none
+                                      ),
                                       hintText: "Type a message",
                                       hintStyle: TextStyle(color: Colors.grey),
-                                      prefixIcon: IconButton(
-                                        icon: Icon(
-                                          show
-                                              ? Icons.keyboard
-                                              : Icons.emoji_emotions_outlined,
-                                        ),
-                                        onPressed: () {
-                                          if (!show) {
-                                            focusNode.unfocus();
-                                            focusNode.canRequestFocus = false;
-                                          }
-                                          setState(() {
-                                            show = !show;
-                                          });
-                                        },
-                                      ),
+                                      isDense: true
+
+                                      // prefixIcon: IconButton(
+                                      //   icon: Icon(
+                                      //     show
+                                      //         ? Icons.keyboard
+                                      //         : Icons.emoji_emotions_outlined,
+                                      //   ),
+                                      //   onPressed: () {
+                                      //     if (!show) {
+                                      //       focusNode.unfocus();
+                                      //       focusNode.canRequestFocus = false;
+                                      //     }
+                                      //     setState(() {
+                                      //       show = !show;
+                                      //     });
+                                      //   },
+                                      // ),
+
                                       // suffixIcon: Row(
                                       //   mainAxisSize: MainAxisSize.min,
                                       //   children: [
@@ -426,7 +432,8 @@ socket.connect();
                                       //     ),
                                       //   ],
                                       // ),
-                                      contentPadding: EdgeInsets.all(5),
+
+                                      // contentPadding: EdgeInsets.all(5),
                                     ),
                                   ),
                                 ),
@@ -440,10 +447,10 @@ socket.connect();
                                 child: CircleAvatar(
                                   radius: 25,
                                   backgroundColor: sendButton
-                                      ? Color(0xFFA585C1)
-                                      : Color(0xFF9E9E9E),
+                                      ? const Color(0xFFA585C1)
+                                      : const Color(0xFF9E9E9E),
                                   child: IconButton(
-                                    icon: Icon(
+                                    icon: const Icon(
                                       Icons.send,
                                       color: Colors.white,
                                     ),
@@ -453,7 +460,7 @@ socket.connect();
                                             _scrollController
                                                 .position.maxScrollExtent,
                                             duration:
-                                                Duration(milliseconds: 300),
+                                                const Duration(milliseconds: 300),
                                             curve: Curves.easeOut);
                                         sendMessage(
                                           _controller.text,
@@ -473,7 +480,7 @@ socket.connect();
                               ),
                             ],
                           ),
-                          // show ? emojiSelect() : Container(),
+                          show ? emojiSelect() : Container(),
                         ],
                       ),
                     ),
@@ -513,28 +520,28 @@ socket.connect();
                 children: [
                   iconCreation(
                       Icons.insert_drive_file, Colors.indigo, "Document"),
-                  SizedBox(
+                  const SizedBox(
                     width: 40,
                   ),
                   iconCreation(Icons.camera_alt, Colors.pink, "Camera"),
-                  SizedBox(
+                  const SizedBox(
                     width: 40,
                   ),
                   iconCreation(Icons.insert_photo, Colors.purple, "Gallery"),
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 30,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   iconCreation(Icons.headset, Colors.orange, "Audio"),
-                  SizedBox(
+                  const SizedBox(
                     width: 40,
                   ),
                   iconCreation(Icons.location_pin, Colors.teal, "Location"),
-                  SizedBox(
+                  const SizedBox(
                     width: 40,
                   ),
                   iconCreation(Icons.person, Colors.blue, "Contact"),
@@ -562,12 +569,12 @@ socket.connect();
               color: Colors.white,
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 5,
           ),
           Text(
             text,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 12,
               // fontWeight: FontWeight.w100,
             ),
@@ -577,15 +584,16 @@ socket.connect();
     );
   }
 
-  // Widget emojiSelect() {
-  //   return EmojiPicker(
-  //       rows: 4,
-  //       columns: 7,
-  //       onEmojiSelected: (emoji, category) {
-  //         print(emoji);
-  //         setState(() {
-  //           _controller.text = _controller.text + emoji.emoji;
-  //         });
-  //       });
-  // }
+  Widget emojiSelect() {
+    return EmojiChoose(
+        rows: 4,
+        columns: 7,
+        onEmojiSelected: (emoji, category) {
+          print(emoji);
+          setState(() {
+            _controller.text = _controller.text + emoji.emoji;
+          });
+        },
+      recommendKeywords: ["people"],);
+  }
 }

@@ -319,6 +319,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       padding: EdgeInsets.only(
                           left: 20.0 * _widthScale, right: 20 * _widthScale),
                       child: TextFormField(
+                        obscureText: true,
                         cursorColor: Color(0xFF775594),
                         controller: _password,
                         autofocus: false,
