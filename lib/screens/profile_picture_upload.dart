@@ -1,4 +1,3 @@
-//import 'dart:html';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -9,6 +8,7 @@ import 'package:mybud/screens/descibe_yourself_screen.dart';
 import 'package:mybud/shared_preferences/login_preferences.dart';
 import 'package:mybud/theme_modules/box_color.dart';
 import 'package:mybud/widgets/token_profile.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'dart:io';
 
 import 'package:provider/provider.dart';
@@ -58,13 +58,34 @@ class _ProfileUploadScreenState extends State<ProfileUploadScreen> {
       const snackBar = SnackBar(
         backgroundColor: Color(0xFFA585C1),
         content: Text(
-          "Enter the details",
+          "Kindly upload your latest picture to proceed",
           style: TextStyle(color: Colors.white),
         ),
         duration: Duration(milliseconds: 2000),
       );
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
     }
+  }
+
+  getpermission() async {
+    if(await Permission.location.serviceStatus.isEnabled){
+      var status = await Permission.location.status;
+      if(status.isGranted){
+
+      } else if(status.isDenied) {
+        Map<Permission, PermissionStatus> status = await [Permission.location,].request();
+      } else if(status.isPermanentlyDenied) {
+        openAppSettings();
+      }
+    } else {
+
+    }
+  }
+
+  @override
+  void initState() {
+    getpermission();
+    super.initState();
   }
 
   double kDesignWidth = 375;
@@ -176,15 +197,14 @@ class _ProfileUploadScreenState extends State<ProfileUploadScreen> {
                   citySearchPlaceholder: "City",
 
                   ///labels for dropdown
-                  countryDropdownLabel: "*Country",
+                  countryDropdownLabel: "Country",
                   stateDropdownLabel: " State",
                   cityDropdownLabel: " City",
 
                   ///Default Country
-                  defaultCountry: DefaultCountry.India,
 
                   ///Disable country dropdown (Note: use it with default country)
-                  disableCountry: false,
+                  //disableCountry: false,
 
                   ///selected item style [OPTIONAL PARAMETER]
                   selectedItemStyle: TextStyle(

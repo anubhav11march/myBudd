@@ -12,7 +12,7 @@ class AddImage extends ChangeNotifier {
    required File image
   }) async {
     var response = await ApiProvider.post(
-      url: 'https://sheltered-earth-76230.herokuapp.com/user/upload',
+      url: 'https://mybud.herokuapp.com/user/upload',
       body: {
       'image' : image == null? '' : await MultipartFile.fromFile(image.path),
     },

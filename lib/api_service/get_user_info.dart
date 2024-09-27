@@ -8,7 +8,7 @@ import 'package:http/http.dart' as http;
 //var tokens = tokenProfile?.token;
 Future getUserInfo(token, id) async {
   http.Response res = await http.get(
-    Uri.parse('https://sheltered-earth-76230.herokuapp.com/card/getuser?userid=$id'),
+    Uri.parse('https://mybud.herokuapp.com/card/getuser?userid=$id'),
     headers: {'Authorization': "Bearer " + token
      },
   );

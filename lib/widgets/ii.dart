@@ -22,6 +22,7 @@ class SkillScreen extends StatefulWidget {
 
 Map<String, bool>? players;
 Map<String, bool>? playersName;
+TextEditingController _controller = TextEditingController();
 
 class _SkillScreenState extends State<SkillScreen> {
   bool selects = false;
@@ -46,7 +47,7 @@ class _SkillScreenState extends State<SkillScreen> {
   //   });
   // }
 
-  TextEditingController _controller = TextEditingController();
+
 // var res;
 //   Future<void> getData() async {
 //     res = await getUserImage(tokenProfile?.token);
@@ -155,7 +156,7 @@ class _SkillScreenState extends State<SkillScreen> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Text(
-                    players!.length == null ? '0 selected' : '${tt} selected',
+                    players!.length == null ? '0 s qelected' : '${tt} selected',
                     style: GoogleFonts.poppins(
                         fontSize: _widthScale * 14,
                         fontWeight: FontWeight.w400,
@@ -196,6 +197,19 @@ class _SkillScreenState extends State<SkillScreen> {
                       color: Color(0xFFCCCCCC),
                     ),
                   ),
+                  suffix: GestureDetector(
+                    onTap: () {
+                      _controller.clear();
+                    },
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                          left: _widthScale * 10.0, right: _widthScale * 10),
+                      child: Icon(
+                        Icons.clear,
+                        color: Color(0xFFCCCCCC),
+                      ),
+                    ),
+                  ),
                   // suffix: Padding(
                   //   padding: EdgeInsets.only(right: _widthScale * 18.0),
                   //   child: Image.asset(
@@ -211,6 +225,7 @@ class _SkillScreenState extends State<SkillScreen> {
                     textStyle: TextStyle(
                         fontSize: _widthScale * 14, color: Color(0xFFCCCCCC)),
                   ),
+                  isDense: true,
                   contentPadding: EdgeInsets.only(
                       left: _widthScale * 14.0,
                       bottom: _widthScale * 8.0,
@@ -241,15 +256,19 @@ class _SkillScreenState extends State<SkillScreen> {
                         future: skills(_controller.text),
                         builder: (context, snapShot) {
                           print('coni$_controller');
-
+                          if(snapShot.connectionState == ConnectionState.waiting) {
+                            return Center(
+                              child: CircularProgressIndicator(
+                                color: BoxColor.PurpleBox(context),
+                              ),
+                            );
+                          }
                           return res.isEmpty
-                              ? Container(
-                                  height: 44 * _heightScale,
-                                  width: 330 * _widthScale,
-                                  child: Center(
-                                      child: CircularProgressIndicator(
-                                    color: Color(0xFF775594),
-                                  )))
+                              ? Column(
+                                children: [
+                                  PlayerCard(profile: "${_controller.text[0].toUpperCase()}${_controller.text.substring(1)}",),
+                                ],
+                              )
                               : SmartRefresher(
                                   controller: refreshController,
                                   enablePullUp: false,
@@ -360,7 +379,7 @@ class _SkillScreenState extends State<SkillScreen> {
               ),
             ),
             SizedBox(
-              height: _heightScale * 15,
+              height: _heightScale * 10,
             ),
           ],
         ),
@@ -371,7 +390,6 @@ class _SkillScreenState extends State<SkillScreen> {
 
 class PlayerCard extends StatefulWidget {
   final String profile;
-
   // bool isSelected;
 
   PlayerCard({required this.profile});
@@ -415,10 +433,15 @@ class _PlayerCardState extends State<PlayerCard> {
   sele() {
     if ((players!['${widget.profile}'] == null) ||
         (players!['${widget.profile}'] == false)) {
-      selectPlayers(true);
+      setState(() {
+        selectPlayers(true);
+      });
+
       // players!.length;
     } else if ((players!['${widget.profile}'] == true)) {
-      selectPlayers(false);
+      setState(() {
+        selectPlayers(false);
+      });
     }
     //selectPlayer(true);
   }
@@ -444,6 +467,7 @@ class _PlayerCardState extends State<PlayerCard> {
           onPressed: () {
             // if (widget.players!.values == (false) || widget.players!.values.isEmpty) {
             sele();
+            _controller.clear();
             // } else if (widget.players!.values == (true)) {
             //   select();
             // }

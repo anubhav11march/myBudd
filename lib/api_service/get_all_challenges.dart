@@ -8,7 +8,7 @@ import 'package:http/http.dart' as http;
 //var tokens = tokenProfile?.token;
 Future getAllChallenges(token) async {
   http.Response res = await http.get(
-    Uri.parse('https://sheltered-earth-76230.herokuapp.com/challenge/getchallenges'),
+    Uri.parse('https://mybud.herokuapp.com/challenge/getchallenges'),
     headers: {'Authorization': "Bearer " + token
      },
   );

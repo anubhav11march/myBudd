@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:mybud/screens/challenges_screen.dart';
 import 'package:mybud/screens/notification_screen.dart';
 import 'package:mybud/screens/to_do_list_screen.dart';
+import 'package:mybud/theme_modules/colors.dart';
 
 class CustomChallenge extends StatefulWidget {
   const CustomChallenge({Key? key}) : super(key: key);
@@ -43,12 +44,12 @@ class _CustomChallengeState extends State<CustomChallenge> {
               child: Column(
                 children: [
                   Text(
-                    'To-do list',
+                    'Active Challenges',
                     style: GoogleFonts.poppins(
                         color: _selectedIndex == 0
                             ? Color(0xFFA585C1)
                             : Color(0xFFCDCDCD),
-                        fontSize: 20 * _widthScale,
+                        fontSize: 18 * _widthScale,
                         fontWeight: FontWeight.w600),
                   ),
                   SizedBox(
@@ -81,7 +82,7 @@ class _CustomChallengeState extends State<CustomChallenge> {
                         color: _selectedIndex == 1
                             ? Color(0xFFA585C1)
                             : Color(0xFFCDCDCD),
-                        fontSize: 20 * _widthScale,
+                        fontSize: 18 * _widthScale,
                         fontWeight: FontWeight.w600),
                   ),
                   SizedBox(
@@ -115,12 +116,36 @@ class _CustomChallengeState extends State<CustomChallenge> {
         children: [
           ToDoListScreen(),
           ChallengeScreen(),
-
           // Center(
           // child: _widgetOptions.elementAt(_selectedIndex),
           //  ),
         ],
       ),
+      bottomNavigationBar: _selectedIndex == 0 ? Container(
+        margin: EdgeInsets.only(left: 23 * _widthScale, right: 23 * _widthScale),
+        child: GestureDetector(
+          onTap: () {
+            _pageController.animateToPage(1, duration: Duration(milliseconds: 300), curve: Curves.linear);
+          },
+          child: Container(
+            height: 56 * _heightScale,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8 * _widthScale),
+              color: Color(0xffA585C1),
+            ),
+            child: Center(
+              child: Text(
+                  "Add New Challenge",
+                style: GoogleFonts.poppins(
+                  fontSize: 20 * _widthScale,
+                  color: white,
+                  fontWeight: FontWeight.w600
+                ),
+              ),
+            ),
+          ),
+        ),
+      ) : null,
     );
   }
 }

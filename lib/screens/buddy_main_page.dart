@@ -255,7 +255,7 @@ class _MainPageState extends State<MainPage> {
           ),
           //  Text('yy'),
           SizedBox(
-            height: 17.9 * _heightScale,
+            height: 8 * _heightScale,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -472,6 +472,10 @@ class _MainPageState extends State<MainPage> {
     return FutureBuilder(
         future: yy(),
         builder: (context, snapShot) {
+          // if(snapShot.connectionState == ConnectionState.waiting)
+          //   return CircularProgressIndicator(
+          //     color: Color(0xFFA585C1),
+          //   );
           return res == null
               ? const CircularProgressIndicator(
                   color: Color(0xFFA585C1),
@@ -505,9 +509,9 @@ class _MainPageState extends State<MainPage> {
                       //numm == null ?
 
                       numm == filter.length
-                          ? Text('List is empty')
+                          ? Text('We are looking for more profiles for you, check back soon')
                           : filter[numm]['Info'] == null
-                              ? Text('list is empty')
+                              ? Text('We are looking for more profiles for you, check back soon')
                               : InkWell(
                                   onTap: () {
                                     Navigator.push(

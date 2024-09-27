@@ -15,7 +15,7 @@ class PostAttendance {
     });
 
     var response = await dio.post(
-      'https://sheltered-earth-76230.herokuapp.com/challenge/attendence',
+      'https://mybud.herokuapp.com/challenge/attendence',
       data: formData,
       options: Options(
         followRedirects: false,

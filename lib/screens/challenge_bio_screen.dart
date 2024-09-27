@@ -67,19 +67,19 @@ class _ChallengeBioScreenState extends State<ChallengeBioScreen> {
       body: SafeArea(
         child: Stack(children: [
           // ignore: avoid_unnecessary_containers
-          Container(
-              height: 812 * _heightScale,
-              width: 375 * _widthScale,
-              child: Image.asset(
-                'assets/unsplash_Oalh2MojUuk.png',
-                fit: BoxFit.fill,
-              )
-
-              //  Image.network(
-              //   widget.image,
-              //   fit: BoxFit.cover,
-              // ),
-              ),
+          // Container(
+          //     height: 812 * _heightScale,
+          //     width: 375 * _widthScale,
+          //     child: Image.asset(
+          //       'assets/unsplash_Oalh2MojUuk.png',
+          //       fit: BoxFit.fill,
+          //     )
+          //
+          //     //  Image.network(
+          //     //   widget.image,
+          //     //   fit: BoxFit.cover,
+          //     // ),
+          //     ),
 
           Padding(
             padding: EdgeInsets.only(top: 507 * _heightScale),

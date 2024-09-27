@@ -66,10 +66,10 @@ class _WorkingProScreenState extends State<WorkingProScreen> {
                 SizedBox(
                   height: _heightScale * 30,
                 ),
-                Image.asset(
-                  'assets/Group 33874.png',
-                  alignment: Alignment.center,
-                ),
+                // Image.asset(
+                //   'assets/Group 33874.png',
+                //   alignment: Alignment.center,
+                // ),
                 SizedBox(
                   height: _heightScale * 30,
                 ),

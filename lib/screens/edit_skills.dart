@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mybud/api_service/edit%20_add_skills.dart';
 import 'package:mybud/api_service/get_skills.dart';
+import 'package:mybud/api_service/get_user_profile.dart';
 import 'package:mybud/theme_modules/box_color.dart';
 import 'package:mybud/widgets/token_profile.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -13,18 +14,20 @@ class EditSkills extends StatefulWidget {
   _EditSkillsState createState() => _EditSkillsState();
 }
 
-Map<String, bool>? players;
+Map<String, bool> players = {};
 Map<String, bool>? playersName;
+List data = [];
 
 class _EditSkillsState extends State<EditSkills> {
   TextEditingController _controller = TextEditingController();
+  ScrollController scrollController = ScrollController();
   final RefreshController refreshController =
       RefreshController(initialRefresh: true);
   _onAdd(BuildContext context) async {
-    print(
-        'final skills ${players!.keys.toString().replaceAll('(', '').replaceAll(')', '')}');
+    //print(
+    //     'final skills ${players!.keys.toString().replaceAll('(', '').replaceAll(')', '')}');
     await EditAddSkills.verify(
-        players!.keys.toString().replaceAll('(', '').replaceAll(')', ''),
+        players.keys.toString().replaceAll('(', '').replaceAll(')', ''),
         tokenProfile?.token);
     // detailProvider
     //     .skii(players!.keys.toString().replaceAll('(', '').replaceAll(')', ''));
@@ -35,23 +38,39 @@ class _EditSkillsState extends State<EditSkills> {
   List res = [];
   skills(name) async {
     res = await getSkills(tokenProfile?.token, name);
-    print('123456$res');
+    //print('123456$res');
   }
 
   int tt = 0;
   int ff() {
     setState(() {
-      tt = players!.length;
+      tt = players.length;
     });
     return tt;
   }
 
+  var profile;
+  bool run = false;
+  Future<void> getData() async {
+    setState(() {
+      run = true;
+    });
+    profile = await getdetails(tokenProfile?.token);
+    data.addAll(profile["skillsets"]);
+    data.forEach((element) {
+      players[element.toString().trim()] = true;
+    });
+
+    // players = Map.fromIterable(data, key: (e)=> e, value: (e)=> true);
+  }
+
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    players = {};
-    players!.length;
+    if(run == false) {
+      getData();
+    }
+    players.length;
   }
 
   @override
@@ -91,12 +110,12 @@ class _EditSkillsState extends State<EditSkills> {
                     onChanged: (val) async {
                       // Future.delayed(Duration(seconds: 5));
                       setState(() {
-                        print(val);
+                        //print(val);
                         // getSearch(page, val);
                         skills(val);
                         //  Future.delayed(Duration(seconds: 5));
-                        //  print('t... $res');
-                        print("Name is getting printed$val");
+                        //  //print('t... $res');
+                        //print("Name is getting //printed$val");
                       });
                     },
                     autofocus: true,
@@ -156,7 +175,7 @@ class _EditSkillsState extends State<EditSkills> {
                         FutureBuilder(
                             future: skills(_controller.text),
                             builder: (context, snapShot) {
-                              print('coni$_controller');
+                              //print('coni$_controller');
 
                               return res.isEmpty
                                   ? Container(
@@ -170,14 +189,35 @@ class _EditSkillsState extends State<EditSkills> {
                                       enablePullDown: false,
                                       // onRefresh: _onRefresh,
                                       //   onLoading: () => _onLoading(context),
-                                      child: ListView.builder(
-                                          itemCount: res.length,
-                                          itemBuilder:
-                                              (BuildContext context, index) {
-                                            return PlayerCard(
-                                              profile: res[index],
-                                            );
-                                          }),
+                                      child: ListView(
+                                        shrinkWrap: true,
+                                        children: [
+                                          ListView.builder(
+                                            shrinkWrap: true,
+                                            controller: scrollController,
+                                            itemCount: players.length,
+                                            itemBuilder: (context, val) {
+                                              return PlayerCard(
+                                                profile: players.keys.elementAt(val),
+                                              );
+                                            },
+                                          ),
+                                          ListView.builder(
+                                              itemCount: res.length,
+                                              shrinkWrap: true,
+                                              controller: scrollController,
+                                              itemBuilder:
+                                                  (BuildContext context, index) {
+                                                if(!players.containsKey(res[index])) {
+                                                  return PlayerCard(
+                                                    profile: res[index],
+                                                  );
+                                                } else {
+                                                  return Container();
+                                                }
+                                              }),
+                                        ],
+                                      ),
                                     );
                             }),
                   ),
@@ -191,7 +231,7 @@ class _EditSkillsState extends State<EditSkills> {
                     onPressed: () {
                       //  dispose();
                       _onAdd(context);
-                      if (players!.keys.isEmpty) {
+                      if (players.keys.isEmpty) {
                         const snackBar = SnackBar(
                           backgroundColor: Color(0xFFA585C1),
                           content: Text(
@@ -235,6 +275,9 @@ class _EditSkillsState extends State<EditSkills> {
       ),
     );
   }
+  card (String title) {
+
+  }
 }
 
 class PlayerCard extends StatefulWidget {
@@ -249,11 +292,11 @@ class PlayerCard extends StatefulWidget {
 }
 
 class _PlayerCardState extends State<PlayerCard> {
-  select() {
-    selectPlayers(false);
-
-    // selectPlayer(false);
-  }
+  // select() {
+  //   selectPlayers(false);
+  //
+  //   // selectPlayer(false);
+  // }
 
   selectPlayers(bool isCheck) {
     if (isCheck == true) {
@@ -262,7 +305,8 @@ class _PlayerCardState extends State<PlayerCard> {
         // players.remove('${widget.profile.id}');
         // } else {
 
-        players!['${widget.profile}'] = isCheck;
+        players[widget.profile] = isCheck;
+        print(players);
         // ff();
         //     players!.length;
         // playersName['${widget.profile.name}'] = isCheck;
@@ -271,24 +315,32 @@ class _PlayerCardState extends State<PlayerCard> {
       });
     } else if (isCheck == false) {
       setState(() {
-        players!.remove('${widget.profile}');
+        players.remove(widget.profile);
+        print(data);
       });
     }
-    // print(matchId);
-    print('players sel: ${players}');
-    print('players sele: ${players!.values.toString()}');
-    print('player select : ${players!.length} }');
+    // //print(matchId);
+    //print('players sel: ${players}');
+    //print('players sele: ${players!.values.toString()}');
+    //print('player select : ${players!.length} }');
   }
 
   sele() {
-    if ((players!['${widget.profile}'] == null) ||
-        (players!['${widget.profile}'] == false)) {
+    if ((players[widget.profile] == null) ||
+        (players[widget.profile] == false)) {
       selectPlayers(true);
       // players!.length;
-    } else if ((players!['${widget.profile}'] == true)) {
+    } else if ((players[widget.profile] == true)) {
       selectPlayers(false);
     }
     //selectPlayer(true);
+  }
+
+  @override
+  void initState() {
+    print(players[widget.profile]);
+    print(widget.profile);
+    super.initState();
   }
 
   // erer() {
@@ -324,7 +376,7 @@ class _PlayerCardState extends State<PlayerCard> {
             // });
           },
           style: ElevatedButton.styleFrom(
-            primary: (players!['${widget.profile}']) == true
+            primary: (players[widget.profile]) == true
                 ? BoxColor.PurpleBox(context)
                 : Color(0xFFFFFFFF),
             shape: RoundedRectangleBorder(
@@ -341,7 +393,7 @@ class _PlayerCardState extends State<PlayerCard> {
                   textStyle: TextStyle(
                       fontSize: _widthScale * 18,
                       fontWeight: FontWeight.w600,
-                      color: (players!['${widget.profile}']) == true
+                      color: (players[widget.profile]) == true
                           ? Colors.white
                           : Color(0xFF775594))),
             ),

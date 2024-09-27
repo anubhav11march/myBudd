@@ -14,7 +14,7 @@ class ResendOtp {
     });
 
     var response = await dio.post(
-      'https://sheltered-earth-76230.herokuapp.com/user/resendotp',
+      'https://mybud.herokuapp.com/user/resendotp',
       data: formData,
       options: Options(
         followRedirects: false,

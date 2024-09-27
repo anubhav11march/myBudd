@@ -119,7 +119,7 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
                                           color: Color(0xFF4D4D4D)),
                                     ),
                                     Text(
-                                      'Tap to view more',
+                                      'Tap to start the challenge',
                                       style: GoogleFonts.poppins(
                                           fontSize: 11 * _widthScale,
                                           fontWeight: FontWeight.w400,
@@ -193,7 +193,7 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
                         //               width: 278 * _widthScale,
                         //               // color: Colors.white,
                         //               child: Text(
-                        //                 'Tap to view more',
+                        //                 'Tap to start the challenge',
                         //                 style: GoogleFonts.poppins(
                         //                     fontSize: 11 * _widthScale,
                         //                     fontWeight: FontWeight.w400,
@@ -285,7 +285,7 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
                                           color: Color(0xFF4D4D4D)),
                                     ),
                                     Text(
-                                      'Tap to view more',
+                                      'Tap to start the challenge',
                                       style: GoogleFonts.poppins(
                                           fontSize: 11 * _widthScale,
                                           fontWeight: FontWeight.w400,
@@ -375,7 +375,7 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
                                           color: Color(0xFF4D4D4D)),
                                     ),
                                     Text(
-                                      'Tap to view more',
+                                      'Tap to start the challenge',
                                       style: GoogleFonts.poppins(
                                           fontSize: 11 * _widthScale,
                                           fontWeight: FontWeight.w400,

@@ -19,7 +19,7 @@ class LogIn {
     });
 
     var response = await dio.post(
-      'https://sheltered-earth-76230.herokuapp.com/user/login',
+      'https://mybud.herokuapp.com/user/login',
       data: formData,
       options: Options(
         followRedirects: false,

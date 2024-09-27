@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:mybud/api_service/get_user_challenges.dart';
 import 'package:mybud/api_service/post_user_attendance.dart';
 import 'package:mybud/screens/active_challenge_bio_screen.dart';
+import 'package:mybud/screens/challenges_screen.dart';
 import 'package:mybud/widgets/chat.dart';
 import 'package:mybud/widgets/data.dart';
 import 'package:mybud/widgets/dismissible_widget.dart';

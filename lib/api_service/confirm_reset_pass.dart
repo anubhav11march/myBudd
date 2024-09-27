@@ -15,7 +15,7 @@ class AddResetPass {
     });
 
     var response = await dio.post(
-      'https://sheltered-earth-76230.herokuapp.com/user/resetpassword',
+      'https://mybud.herokuapp.com/user/resetpassword',
       data: formData,
       options: Options(
         followRedirects: false,

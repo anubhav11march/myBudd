@@ -9,7 +9,7 @@ import 'package:mybud/widgets/token_profile.dart';
 Future getsavedCards( token) async {
   http.Response res = await http.get(
     Uri.parse(
-        'https://sheltered-earth-76230.herokuapp.com/card/savedcards'),
+        'https://mybud.herokuapp.com/card/savedcards'),
     headers: {'Authorization': "Bearer " + token
    // 'eyJhbGciOiJIUzI1NiJ9.IjYxYjVmZTllMDY2ZjNhOWJmYjc0ODFiMiI.1BrDUIYNTertbV74L05Zc-6UC6p0WqLkIXBA1Outxac'
     // token

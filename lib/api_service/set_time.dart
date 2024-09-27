@@ -15,7 +15,7 @@ class Settime {
     });
 
     var response = await dio.post(
-      'https://sheltered-earth-76230.herokuapp.com/card/setmatchtime',
+      'https://mybud.herokuapp.com/card/setmatchtime',
       data: formData,
       options: Options(
         followRedirects: false,

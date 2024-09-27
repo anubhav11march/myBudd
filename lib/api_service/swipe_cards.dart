@@ -13,7 +13,7 @@ class SwipeCards extends ChangeNotifier {
     String? status,
   }) async {
     var response = await ApiProvider.post(
-      url: 'https://sheltered-earth-76230.herokuapp.com/card/swipe',
+      url: 'https://mybud.herokuapp.com/card/swipe',
       body: {'swipedby': swipedby, 'swipedon': swipedon, 'status': status},
       token: tokenProfile?.token,
     );

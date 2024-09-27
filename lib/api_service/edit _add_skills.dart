@@ -13,7 +13,7 @@ class EditAddSkills {
     });
 
     var response = await dio.patch(
-      'https://sheltered-earth-76230.herokuapp.com/user/editskill',
+      'https://mybud.herokuapp.com/user/editskill',
       data: formData,
       options: Options(
         followRedirects: false,

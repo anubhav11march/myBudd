@@ -147,8 +147,15 @@ class _VerifiyEmailState extends State<VerifiyEmail> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              Align(
+                alignment: Alignment.topLeft,
+                child: IconButton(
+                  icon: Icon(Icons.arrow_back),
+                  onPressed: () => Navigator.of(context).pop(),
+                ),
+              ),
               SizedBox(
-                height: 31 * _heightScale,
+                height: 20 * _heightScale,
               ),
               Text(
                 'Confirm your Email Id',

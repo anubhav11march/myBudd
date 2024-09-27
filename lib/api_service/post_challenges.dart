@@ -15,7 +15,7 @@ class AddChallenge {
     });
 
     var response = await dio.post(
-      'https://sheltered-earth-76230.herokuapp.com/challenge/takechallenge',
+      'https://mybud.herokuapp.com/challenge/takechallenge',
       data: formData,
       options: Options(
         followRedirects: false,

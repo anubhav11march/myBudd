@@ -221,11 +221,14 @@ class _LoginScreenState extends State<LoginScreen> {
                     SizedBox(
                       height: _heightScale * 36,
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Image.asset("assets/Ellipse 1.png"),
-                      ],
+                    SizedBox(
+                      height: 68 * _heightScale,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Image.asset("assets/Ellipse 1.png"),
+                        ],
+                      ),
                     ),
                     SizedBox(height: 7 * _heightScale),
                     Text(
@@ -316,6 +319,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       padding: EdgeInsets.only(
                           left: 20.0 * _widthScale, right: 20 * _widthScale),
                       child: TextFormField(
+                        obscureText: true,
                         cursorColor: Color(0xFF775594),
                         controller: _password,
                         autofocus: false,

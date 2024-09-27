@@ -6,6 +6,7 @@ import 'package:dio/dio.dart';
 class SendInvite {
   static Future verify(buddyid, token) async {
     print('invite send');
+    print(token);
     var dio = Dio();
 
     FormData formData = FormData.fromMap({
@@ -13,7 +14,7 @@ class SendInvite {
     });
 
     var response = await dio.post(
-      'https://sheltered-earth-76230.herokuapp.com/user/sendinvite',
+      'https://mybud.herokuapp.com/user/sendinvite',
       data: formData,
       options: Options(
         followRedirects: false,
@@ -26,6 +27,8 @@ class SendInvite {
      },
       ),
     );
+
+    print("invite : ${response.statusCode}");
 
     if (response.statusCode == 200) {
       print('Response data : ${response.data}');

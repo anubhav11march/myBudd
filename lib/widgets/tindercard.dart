@@ -304,160 +304,160 @@ class _TinderCardState extends State<TinderCard> {
     final status = provider.getStatus();
     final opacity = provider.getStatusOpacity();
     final names = provider.urlNames;
-    return Column(
-      children: [
-        Padding(
-            padding: EdgeInsets.only(
-                top: 224 * _heightScale, left: 22 * _widthScale),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(widget.nam,
-                    style: GoogleFonts.poppins(
-                        fontSize: 22 * _widthScale,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.white)),
-                SizedBox(
-                  height: 16 * _heightScale,
-                ),
-                Row(
-                  children: [
-                    Image.asset('assets/ls_bag.png'),
-                    SizedBox(width: 8 * _widthScale),
-                    Text(widget.profession,
-                        style: GoogleFonts.poppins(
-                            fontSize: 16 * _widthScale,
-                            fontWeight: FontWeight.w500,
-                            color: Color(0xFFB9B9B9))),
-                    if (widget.profession == 'Working Professional')
-                      SizedBox(
-                        width: 80 * _widthScale,
-                      ),
-                    // if (widget.profession == 'Homemaker')
-                    //   SizedBox(
-                    //     width: 0 * _widthScale,
-                    //   ),
-                    if (widget.profession != 'Working Professional')
-                      SizedBox(
-                        width: 130 * _widthScale,
-                      ),
-                    Text(widget.details,
-                        style: GoogleFonts.poppins(
-                            fontSize: 16 * _widthScale,
-                            fontWeight: FontWeight.w500,
-                            color: Color(0xFFB9B9B9))),
-                  ],
-                ),
-                SizedBox(
-                  height: 10 * _heightScale,
-                ),
-                Row(
-                  children: [
-                    Image.asset('assets/Group (9).png'),
-                    SizedBox(width: _widthScale * 8),
-                    Text(widget.reason,
-                        style: GoogleFonts.poppins(
-                            fontSize: 16 * _widthScale,
-                            fontWeight: FontWeight.w500,
-                            color: Color(0xFFB9B9B9))),
-                  ],
-                ),
-                SizedBox(
-                  height: 10 * _heightScale,
-                ),
-                Row(
-                  children: [
-                    Image.asset('assets/Vector (7).png'),
-                    SizedBox(width: _widthScale * 8),
-                    Text('No. of Challenges Completed : 0',
-                        style: GoogleFonts.poppins(
-                            fontSize: 16 * _widthScale,
-                            fontWeight: FontWeight.w500,
-                            color: Color(0xFFB9B9B9))),
-                  ],
-                ),
-                SizedBox(
-                  height: 10 * _heightScale,
-                ),
-                Row(
-                  children: [
-                    Image.asset('assets/Vector (8).png'),
-                    SizedBox(width: _widthScale * 8),
-                    SizedBox(width: 5 * _widthScale),
-                    Text(widget.location,
-                        style: GoogleFonts.poppins(
-                            fontSize: 16 * _widthScale,
-                            fontWeight: FontWeight.w500,
-                            color: Color(0xFFB9B9B9))),
-                  ],
-                ),
-              ],
-            )),
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          Padding(
+              padding: EdgeInsets.only(
+                  top: 224 * _heightScale, left: 22 * _widthScale),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(widget.nam,
+                      style: GoogleFonts.poppins(
+                          fontSize: 22 * _widthScale,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.white)),
+                  SizedBox(
+                    height: 16 * _heightScale,
+                  ),
+                  Row(
+                    children: [
+                      Image.asset('assets/ls_bag.png'),
+                      SizedBox(width: 8 * _widthScale),
+                      Text(widget.profession,
+                          style: GoogleFonts.poppins(
+                              fontSize: 16 * _widthScale,
+                              fontWeight: FontWeight.w500,
+                              color: Color(0xFFB9B9B9))),
+                      if (widget.profession == 'Working Professional')
+                        SizedBox(
+                          width: 80 * _widthScale,
+                        ),
+                      // if (widget.profession == 'Homemaker')
+                      //   SizedBox(
+                      //     width: 0 * _widthScale,
+                      //   ),
+                      if (widget.profession != 'Working Professional')
+                        SizedBox(
+                          width: 130 * _widthScale,
+                        ),
+                      Text(widget.details,
+                          style: GoogleFonts.poppins(
+                              fontSize: 16 * _widthScale,
+                              fontWeight: FontWeight.w500,
+                              color: Color(0xFFB9B9B9))),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 10 * _heightScale,
+                  ),
+                  Row(
+                    children: [
+                      Image.asset('assets/Group (9).png'),
+                      SizedBox(width: _widthScale * 8),
+                      Text(widget.reason,
+                          style: GoogleFonts.poppins(
+                              fontSize: 16 * _widthScale,
+                              fontWeight: FontWeight.w500,
+                              color: Color(0xFFB9B9B9))),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 10 * _heightScale,
+                  ),
+                  Row(
+                    children: [
+                      Image.asset('assets/Vector (7).png'),
+                      SizedBox(width: _widthScale * 8),
+                      Text('No. of Challenges Completed : 0',
+                          style: GoogleFonts.poppins(
+                              fontSize: 16 * _widthScale,
+                              fontWeight: FontWeight.w500,
+                              color: Color(0xFFB9B9B9))),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 10 * _heightScale,
+                  ),
+                  Row(
+                    children: [
+                      Image.asset('assets/Vector (8).png'),
+                      SizedBox(width: _widthScale * 8),
+                      SizedBox(width: 5 * _widthScale),
+                      Text(widget.location,
+                          style: GoogleFonts.poppins(
+                              fontSize: 16 * _widthScale,
+                              fontWeight: FontWeight.w500,
+                              color: Color(0xFFB9B9B9))),
+                    ],
+                  ),
+                ],
+              )),
 
-        SizedBox(height: _heightScale * 19),
-        Container(
-          height: _heightScale * 1,
-          width: _widthScale * 297,
-          color: const Color(0xFFABABAB),
-        ),
-        SizedBox(height: 19 * _heightScale),
-        widget.isFront == false
-            ? SizedBox(
-                height: 85 * _heightScale,
-                width: 330 * _widthScale,
-                child: Text(''))
-            : Padding(
-                padding: EdgeInsets.symmetric(horizontal: 30 * _widthScale),
-                child: SizedBox(
-                    height: 55 * _heightScale,
-                    width: 300 * _widthScale,
-                    child: GridView.builder(
-                        physics: NeverScrollableScrollPhysics(),
-                        shrinkWrap: true,
-                        gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                            maxCrossAxisExtent: 200 * _widthScale,
-                            childAspectRatio: 5 / 2,
-                            crossAxisSpacing: 20 * _widthScale,
-                            mainAxisSpacing: 20 * _widthScale),
-                        itemCount: widget.skills.length,
-                        itemBuilder: (context, index) {
-                          return Container(
-                              alignment: Alignment.center,
-                              decoration: BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.circular(9 * _widthScale),
-                                color: Color(0xFF76D4C3),
-                              ),
-                              height: 35 * _heightScale,
-                              //   color: Color(0xFF76D4C3),
-                              child: Padding(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 8 * _widthScale,
-                                    vertical: 6 * _heightScale),
-                                child: Text(
-                                  widget.skills[index],
-                                  style: GoogleFonts.poppins(
-                                      color: Color(0xFFFFFFFF),
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 16 * _widthScale),
+          SizedBox(height: _heightScale * 19),
+          Container(
+            height: _heightScale * 1,
+            width: _widthScale * 297,
+            color: const Color(0xFFABABAB),
+          ),
+          SizedBox(height: 19 * _heightScale),
+          widget.isFront == false
+              ? SizedBox(
+                  height: 85 * _heightScale,
+                  width: 330 * _widthScale,
+                  child: Text(''))
+              : Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 30 * _widthScale),
+                  child: SizedBox(
+                      width: 300 * _widthScale,
+                      child: GridView.builder(
+                          physics: NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                              maxCrossAxisExtent: 200 * _widthScale,
+                              childAspectRatio: 5 / 2,
+                              crossAxisSpacing: 20 * _widthScale,
+                              mainAxisSpacing: 20 * _widthScale),
+                          itemCount: widget.skills.length,
+                          itemBuilder: (context, index) {
+                            return Container(
+                                alignment: Alignment.center,
+                                decoration: BoxDecoration(
+                                  borderRadius:
+                                      BorderRadius.circular(9 * _widthScale),
+                                  color: Color(0xFF76D4C3),
                                 ),
-                              ));
+                                //   color: Color(0xFF76D4C3),
+                                child: Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 8 * _widthScale,
+                                  ),
+                                  child: Text(
+                                    widget.skills[index],
+                                    style: GoogleFonts.poppins(
+                                        color: Color(0xFFFFFFFF),
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 16 * _widthScale),
+                                  ),
+                                ));
 
-                          //Container(child: Text(widget.skills[index]));
-                        })
+                            //Container(child: Text(widget.skills[index]));
+                          })
 
-                    //  Row(
+                      //  Row(
 
-                    ),
-              ),
-        //             Padding(
-        // padding: EdgeInsets.only(top: 290, left: 22),
-        // child: Text(widget.profession,
-        //     style: GoogleFonts.poppins(
-        //         fontSize: 22,
-        //         fontWeight: FontWeight.w600,
-        //         color: Colors.white))),
-      ],
+                      ),
+                ),
+          //             Padding(
+          // padding: EdgeInsets.only(top: 290, left: 22),
+          // child: Text(widget.profession,
+          //     style: GoogleFonts.poppins(
+          //         fontSize: 22,
+          //         fontWeight: FontWeight.w600,
+          //         color: Colors.white))),
+        ],
+      ),
     );
     // return Text(
     //   names.map((e) => Text(e)).toString(),

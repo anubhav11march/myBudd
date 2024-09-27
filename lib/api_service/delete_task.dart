@@ -14,7 +14,7 @@ class DeleteTask {
     });
 
     var response = await dio.delete(
-      'https://sheltered-earth-76230.herokuapp.com/task/taskdelete',
+      'https://mybud.herokuapp.com/task/taskdelete',
       data: formData,
       options: Options(
         followRedirects: false,

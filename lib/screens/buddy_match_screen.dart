@@ -57,7 +57,7 @@ class _BuddyMatchScreenState extends State<BuddyMatchScreen> {
     //  print('userfriend : ${res['buddydetails'][0]['_id']}');
     // MessageModel messageModel = MessageModel(sourceId: widget.sourceChat.id.toString(),targetId: );
     socket =
-        IO.io("https://sheltered-earth-76230.herokuapp.com", <String, dynamic>{
+        IO.io("", <String, dynamic>{
       "transports": ["websocket"],
       "autoConnect": false,
     });
